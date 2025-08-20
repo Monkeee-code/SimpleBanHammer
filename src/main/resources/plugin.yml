@@ -1,0 +1,19 @@
+name: SimpleBanHammer
+version: '1.0'
+main: me.monkeee.simpleBanHammer.SimpleBanHammer
+api-version: '1.21'
+prefix: SBH
+authors: [ _Monkeee ]
+description: A Simple Ban Hammer for admins to use.
+load: POSTWORLD
+permissions:
+  sbh.give:
+    description: A perm. required for giving a player the ban Hammer.
+    default: op
+  sbh.usehammer:
+    description: A perm. required to use the hammer.
+    default: op
+commands:
+  givehammer:
+    description: Give yourself the ban hammer.
+    permission: sbh.give
