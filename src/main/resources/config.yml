@@ -1,0 +1,11 @@
+######################################
+#       SimpleBanHammer 1.0.1v       #
+#             By _Monkeee            #
+######################################
+
+# Type: Bool. Weather the ban is broadcasted to all the players.
+enable-broadcast: false
+
+# Type: str. Message that is broadcasted to all the players.
+# ONLY IF 'enable-broadcast' IS ENABLED
+broadcast-message: '&cPlayer &r%player% &chas been banned by &a%admin%'

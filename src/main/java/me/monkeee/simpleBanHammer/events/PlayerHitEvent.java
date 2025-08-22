@@ -1,7 +1,9 @@
 package me.monkeee.simpleBanHammer.events;
 
+import me.monkeee.simpleBanHammer.SimpleBanHammer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,15 +18,26 @@ public class PlayerHitEvent implements Listener {
     public void onPlayerHit(EntityDamageByEntityEvent e) {
         Entity damager = e.getDamager();
         Entity target = e.getEntity();
+        FileConfiguration config = SimpleBanHammer.getinstance().getConfig();
 
         if (damager instanceof Player dmg && target instanceof Player victim) {
-            if (dmg.hasPermission("sbh.usehammer") && !victim.isOp()) {
+            if (dmg.hasPermission("sbh.usehammer") && !victim.isOp() && !victim.hasPermission("sbh.exampt")) {
                 ItemStack weapon = dmg.getInventory().getItemInMainHand();
                 if (Objects.requireNonNull(weapon.getItemMeta()).getItemName().equals("sbh_hammer")) {
                     victim.getWorld().strikeLightning(victim.getLocation());
                     Bukkit.dispatchCommand(dmg, "ban " + victim.getName() + " The Ban Hammer Has Spoken!");
                     if (!victim.isOnline()) {
                         dmg.sendMessage(ChatColor.GREEN + "Player " + ChatColor.RESET + victim.getName() + ChatColor.GREEN + " has been banned!");
+                        if (config.getBoolean("enable-broadcast")) {
+                            for (Player users : Bukkit.getOnlinePlayers()) {
+                                String message = config.getString("broadcast-message");
+                                assert message != null;
+                                message = ChatColor.translateAlternateColorCodes('&', message);
+                                message = message.replace("%player%", victim.getName());
+                                message = message.replace("%admin%", dmg.getName());
+                                users.sendMessage(message);
+                            }
+                        }
                     } else dmg.sendMessage(ChatColor.RED + "The ban failed. Please try again later.");
                 }
             } else dmg.sendMessage(ChatColor.RED + "You don't have the right permissions or the player is Operator!");
