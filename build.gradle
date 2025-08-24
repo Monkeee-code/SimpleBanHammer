@@ -1,10 +1,11 @@
 plugins {
     id 'java'
     id("xyz.jpenilla.run-paper") version "2.3.1"
+    id("com.gradleup.shadow") version "8.3.9"
 }
 
 group = 'me.monkeee'
-version = '1.0.1'
+version = '1.0.2'
 
 repositories {
     mavenCentral()
@@ -12,10 +13,23 @@ repositories {
         name = "spigotmc-repo"
         url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
     }
+    maven {
+        name = "CodeMC"
+        url = uri("https://repo.codemc.io/repository/maven-public/")
+    }
+}
+
+shadowJar {
+    relocate("de.tr7zw.changeme.nbtapi", "me.monkeee.simpleBanHammer")
 }
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.21.5-R0.1-SNAPSHOT")
+    implementation("de.tr7zw:item-nbt-api:2.15.1")
+}
+
+build {
+    dependsOn(shadowJar)
 }
 
 tasks {

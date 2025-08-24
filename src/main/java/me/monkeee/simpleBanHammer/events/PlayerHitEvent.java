@@ -1,5 +1,6 @@
 package me.monkeee.simpleBanHammer.events;
 
+import de.tr7zw.changeme.nbtapi.NBT;
 import me.monkeee.simpleBanHammer.SimpleBanHammer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -23,11 +24,14 @@ public class PlayerHitEvent implements Listener {
         if (damager instanceof Player dmg && target instanceof Player victim) {
             if (dmg.hasPermission("sbh.usehammer") && !victim.isOp() && !victim.hasPermission("sbh.exampt")) {
                 ItemStack weapon = dmg.getInventory().getItemInMainHand();
+                String reason = NBT.get(weapon, nbt -> {
+                    return nbt.getString("Reason");
+                });
                 if (Objects.requireNonNull(weapon.getItemMeta()).getItemName().equals("sbh_hammer")) {
                     victim.getWorld().strikeLightning(victim.getLocation());
-                    Bukkit.dispatchCommand(dmg, "ban " + victim.getName() + " The Ban Hammer Has Spoken!");
+                    Bukkit.dispatchCommand(dmg, "ban " + victim.getName() + " " + reason);
                     if (!victim.isOnline()) {
-                        dmg.sendMessage(ChatColor.GREEN + "Player " + ChatColor.RESET + victim.getName() + ChatColor.GREEN + " has been banned!");
+                        dmg.sendMessage(ChatColor.GREEN + "Player " + ChatColor.RESET + victim.getName() + ChatColor.GREEN + " has been banned with Reason: " + ChatColor.WHITE + reason);
                         if (config.getBoolean("enable-broadcast")) {
                             for (Player users : Bukkit.getOnlinePlayers()) {
                                 String message = config.getString("broadcast-message");
@@ -35,6 +39,7 @@ public class PlayerHitEvent implements Listener {
                                 message = ChatColor.translateAlternateColorCodes('&', message);
                                 message = message.replace("%player%", victim.getName());
                                 message = message.replace("%admin%", dmg.getName());
+                                message = message.replace("%reason%", reason);
                                 users.sendMessage(message);
                             }
                         }

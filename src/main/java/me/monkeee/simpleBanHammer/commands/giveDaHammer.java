@@ -1,8 +1,8 @@
 package me.monkeee.simpleBanHammer.commands;
 
+import de.tr7zw.changeme.nbtapi.NBT;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -11,20 +11,36 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
-public class giveDaHammer implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.List;
 
+public class giveDaHammer implements CommandExecutor {
+    private String commandArgs(String[] args) {
+        if (args.length > 0) {
+            return String.join(" ", args);
+        } else {
+            return "The Ban Hammer Has Spoken!";
+        }
+    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         ItemStack bh = new ItemStack(Material.IRON_AXE);
         ItemMeta bhm = bh.getItemMeta();
+        List<String> lore = new ArrayList<>();
+        lore.add(ChatColor.GRAY + "Reason:");
+        lore.add(ChatColor.GRAY + commandArgs(strings));
         assert bhm != null;
         bhm.setUnbreakable(true);
         bhm.setEnchantmentGlintOverride(true);
         bhm.setDisplayName(ChatColor.RED + "Ban Hammer");
         bhm.setItemName("sbh_hammer");
-        bhm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
+        bhm.setLore(lore);
         bh.setItemMeta(bhm);
+        NBT.modify(bh, nbt -> {
+            nbt.setString("Reason", commandArgs(strings));
+        });
+
         if (commandSender.hasPermission("sbh.give") || commandSender.isOp()) {
             ((Player) commandSender).getInventory().addItem(bh);
             commandSender.sendMessage(ChatColor.GREEN + "You have been given the Ban Hammer!");

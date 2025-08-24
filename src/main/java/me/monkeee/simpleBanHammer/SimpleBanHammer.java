@@ -1,5 +1,6 @@
 package me.monkeee.simpleBanHammer;
 
+import de.tr7zw.changeme.nbtapi.NBT;
 import me.monkeee.simpleBanHammer.commands.giveDaHammer;
 import me.monkeee.simpleBanHammer.commands.reloadConfig;
 import me.monkeee.simpleBanHammer.events.PlayerHitEvent;
@@ -13,6 +14,11 @@ public final class SimpleBanHammer extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        if (!NBT.preloadApi()) {
+            getLogger().warning("NBT-API wasn't initialized properly, disabling the plugin");
+            getPluginLoader().disablePlugin(this);
+            return;
+        }
         // Plugin startup logic
         saveDefaultConfig();
         getLogger().info("Loading Plugin");

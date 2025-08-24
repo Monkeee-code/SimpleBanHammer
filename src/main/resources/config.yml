@@ -1,5 +1,5 @@
 ######################################
-#       SimpleBanHammer 1.0.1v       #
+#       SimpleBanHammer 1.0.2v       #
 #             By _Monkeee            #
 ######################################
 
@@ -8,4 +8,4 @@ enable-broadcast: false
 
 # Type: str. Message that is broadcasted to all the players.
 # ONLY IF 'enable-broadcast' IS ENABLED
-broadcast-message: '&cPlayer &r%player% &chas been banned by &a%admin%'
+broadcast-message: '&cPlayer &r%player% &chas been banned by &a%admin% with the reason: &e%reason%'
