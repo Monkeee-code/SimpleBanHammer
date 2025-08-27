@@ -4,6 +4,7 @@ import de.tr7zw.changeme.nbtapi.NBT;
 import me.monkeee.simpleBanHammer.commands.giveDaHammer;
 import me.monkeee.simpleBanHammer.commands.reloadConfig;
 import me.monkeee.simpleBanHammer.events.PlayerHitEvent;
+import me.monkeee.simpleBanHammer.events.onJoin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
@@ -25,6 +26,7 @@ public final class SimpleBanHammer extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("givehammer")).setExecutor(new giveDaHammer());
         Objects.requireNonNull(this.getCommand("sbh_reload")).setExecutor(new reloadConfig());
         getServer().getPluginManager().registerEvents(new PlayerHitEvent(), this);
+        getServer().getPluginManager().registerEvents(new onJoin(), this);
     }
 
     public static SimpleBanHammer getinstance() {

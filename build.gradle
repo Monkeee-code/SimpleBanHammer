@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'me.monkeee'
-version = '1.0.2'
+version = '1.0.4'
 
 repositories {
     mavenCentral()
@@ -20,12 +20,14 @@ repositories {
 }
 
 shadowJar {
-    relocate("de.tr7zw.changeme.nbtapi", "me.monkeee.simpleBanHammer")
+    relocate("de.tr7zw.changeme.nbtapi", "me.monkeee.simpleBanHammer.libs.NBT")
+    relocate('org.json', 'me.monkeee.simpleBanHammer.libs.json')
 }
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.21.5-R0.1-SNAPSHOT")
     implementation("de.tr7zw:item-nbt-api:2.15.1")
+    implementation ('org.json:json:20240303')
 }
 
 build {

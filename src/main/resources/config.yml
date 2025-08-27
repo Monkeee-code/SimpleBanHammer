@@ -1,7 +1,10 @@
 ######################################
-#       SimpleBanHammer 1.0.2v       #
+#       SimpleBanHammer 1.0.4v       #
 #             By _Monkeee            #
 ######################################
+
+# DO NOT TOUCH UNDER ANY CIRCUMSTANCES!
+current-version: "1.0.4"
 
 # Type: Bool. Weather the ban is broadcasted to all the players.
 enable-broadcast: false
@@ -9,3 +12,7 @@ enable-broadcast: false
 # Type: str. Message that is broadcasted to all the players.
 # ONLY IF 'enable-broadcast' IS ENABLED
 broadcast-message: '&cPlayer &r%player% &chas been banned by &a%admin% with the reason: &e%reason%'
+
+# Type: str, The ban command used to ban players. (ex. tempban, ban, eban, mute, ...)
+# REQUIRED: The moderator has to have permission to use said command!
+ban-command: 'ban %player% %reason%'

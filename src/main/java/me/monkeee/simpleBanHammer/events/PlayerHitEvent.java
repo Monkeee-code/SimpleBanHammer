@@ -20,6 +20,8 @@ public class PlayerHitEvent implements Listener {
         Entity damager = e.getDamager();
         Entity target = e.getEntity();
         FileConfiguration config = SimpleBanHammer.getinstance().getConfig();
+        String banCommand = config.getString("ban-command");
+        assert banCommand != null;
 
         if (damager instanceof Player dmg && target instanceof Player victim) {
             if (dmg.hasPermission("sbh.usehammer") && !victim.isOp() && !victim.hasPermission("sbh.exampt")) {
@@ -27,9 +29,11 @@ public class PlayerHitEvent implements Listener {
                 String reason = NBT.get(weapon, nbt -> {
                     return nbt.getString("Reason");
                 });
+                banCommand = banCommand.replace("%player%", dmg.getName());
+                banCommand = banCommand.replace("%reason%", reason);
                 if (Objects.requireNonNull(weapon.getItemMeta()).getItemName().equals("sbh_hammer")) {
                     victim.getWorld().strikeLightning(victim.getLocation());
-                    Bukkit.dispatchCommand(dmg, "ban " + victim.getName() + " " + reason);
+                    Bukkit.dispatchCommand(dmg, banCommand);
                     if (!victim.isOnline()) {
                         dmg.sendMessage(ChatColor.GREEN + "Player " + ChatColor.RESET + victim.getName() + ChatColor.GREEN + " has been banned with Reason: " + ChatColor.WHITE + reason);
                         if (config.getBoolean("enable-broadcast")) {
