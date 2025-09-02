@@ -58,16 +58,14 @@ public class onJoin implements Listener {
         if (!player.isOp()) return;
 
         FileConfiguration config = SimpleBanHammer.getinstance().getConfig();
-        String currVer = config.getString("current-version");
+        String currVer = "1.0.5";
 
         // Run update check asynchronously
         Bukkit.getScheduler().runTaskAsynchronously(SimpleBanHammer.getinstance(), () -> {
             String latestVer = getLatestVersion();
             if (latestVer != null && !Objects.equals(currVer, latestVer)) {
                 Bukkit.getScheduler().runTask(SimpleBanHammer.getinstance(), () -> {
-                    player.sendMessage(ChatColor.GOLD + "A new version of SimpleBanHammer is available!" +
-                            ChatColor.YELLOW + "\nCurrent Version: " + currVer +
-                            ChatColor.GREEN + "\nLatest Version: " + latestVer);
+                    player.sendMessage(ChatColor.YELLOW + "A new version of SimpleBanHammer is available! " + ChatColor.RED + currVer + ChatColor.WHITE + " == " + ChatColor.GREEN + latestVer);
                 });
             }
         });

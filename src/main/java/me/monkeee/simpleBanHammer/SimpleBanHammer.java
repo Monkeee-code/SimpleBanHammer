@@ -5,6 +5,9 @@ import me.monkeee.simpleBanHammer.commands.giveDaHammer;
 import me.monkeee.simpleBanHammer.commands.reloadConfig;
 import me.monkeee.simpleBanHammer.events.PlayerHitEvent;
 import me.monkeee.simpleBanHammer.events.onJoin;
+import net.luckperms.api.LuckPerms;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
@@ -20,7 +23,10 @@ public final class SimpleBanHammer extends JavaPlugin {
             getPluginLoader().disablePlugin(this);
             return;
         }
-        // Plugin startup logic
+        RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+        if (provider != null) {
+            LuckPerms api = provider.getProvider();
+        }
         saveDefaultConfig();
         getLogger().info("Loading Plugin");
         Objects.requireNonNull(this.getCommand("givehammer")).setExecutor(new giveDaHammer());
@@ -32,6 +38,8 @@ public final class SimpleBanHammer extends JavaPlugin {
     public static SimpleBanHammer getinstance() {
         return instance;
     }
+
+
 
     @Override
     public void onDisable() {
