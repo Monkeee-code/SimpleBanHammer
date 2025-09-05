@@ -3,7 +3,6 @@ package me.monkeee.simpleBanHammer.events;
 import de.tr7zw.changeme.nbtapi.NBT;
 import me.monkeee.simpleBanHammer.SimpleBanHammer;
 import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.cacheddata.CachedMetaData;
 import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

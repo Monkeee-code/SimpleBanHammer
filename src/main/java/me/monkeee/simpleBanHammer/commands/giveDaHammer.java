@@ -1,6 +1,7 @@
 package me.monkeee.simpleBanHammer.commands;
 
 import de.tr7zw.changeme.nbtapi.NBT;
+import me.monkeee.simpleBanHammer.SimpleBanHammer;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -19,33 +20,37 @@ public class giveDaHammer implements CommandExecutor {
         if (args.length > 0) {
             return String.join(" ", args);
         } else {
-            return "The Ban Hammer Has Spoken!";
+            return SimpleBanHammer.getinstance().getConfig().getString("default-reason");
         }
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        ItemStack bh = new ItemStack(Material.IRON_AXE);
-        ItemMeta bhm = bh.getItemMeta();
-        List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Reason:");
-        lore.add(ChatColor.GRAY + commandArgs(strings));
-        assert bhm != null;
-        bhm.setUnbreakable(true);
-        bhm.setEnchantmentGlintOverride(true);
-        bhm.setDisplayName(ChatColor.RED + "Ban Hammer");
-        bhm.setItemName("sbh_hammer");
-        bhm.setLore(lore);
-        bh.setItemMeta(bhm);
-        NBT.modify(bh, nbt -> {
-            nbt.setString("Reason", commandArgs(strings));
-        });
+        if (commandSender instanceof Player) {
+            ItemStack bh = new ItemStack(Material.IRON_AXE);
+            ItemMeta bhm = bh.getItemMeta();
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GRAY + "Reason:");
+            lore.add(ChatColor.GRAY + commandArgs(strings));
+            assert bhm != null;
+            bhm.setUnbreakable(true);
+            bhm.setEnchantmentGlintOverride(true);
+            bhm.setDisplayName(ChatColor.RED + "Ban Hammer");
+            bhm.setItemName("sbh_hammer");
+            bhm.setLore(lore);
+            bh.setItemMeta(bhm);
+            NBT.modify(bh, nbt -> {
+                nbt.setString("Reason", commandArgs(strings));
+            });
 
-        if (commandSender.hasPermission("sbh.give") || commandSender.isOp()) {
-            ((Player) commandSender).getInventory().addItem(bh);
-            commandSender.sendMessage(ChatColor.GREEN + "You have been given the Ban Hammer!");
+            if (commandSender.hasPermission("sbh.give") || commandSender.isOp()) {
+                ((Player) commandSender).getInventory().addItem(bh);
+                commandSender.sendMessage(ChatColor.GREEN + "You have been given the Ban Hammer!");
+            } else {
+                commandSender.sendMessage(ChatColor.RED + "Not Enough permission! :(");
+            }
         } else {
-            commandSender.sendMessage(ChatColor.RED + "Not Enough permission! :(");
+            commandSender.sendMessage(ChatColor.RED + "Only players can execute this command!");
         }
         return false;
     }

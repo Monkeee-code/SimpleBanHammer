@@ -1,5 +1,5 @@
 ######################################
-#       SimpleBanHammer 1.0.5v       #
+#       SimpleBanHammer 1.0.6v       #
 #             By _Monkeee            #
 ######################################
 
@@ -17,3 +17,6 @@ broadcast-message: '&cPlayer %prefix_player% &chas been banned by %prefix_admin%
 # Type: str, The ban command used to ban players. (ex. tempban, ban, eban, mute, ...)
 # REQUIRED: The moderator has to have permission to use said command!
 ban-command: 'ban %player% %reason%'
+
+# Type: str, The ban message if non arguments given.
+default-reason: "The Ban Hammer Has Spoken!"
