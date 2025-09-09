@@ -3,7 +3,6 @@ package me.monkeee.simpleBanHammer.events;
 import me.monkeee.simpleBanHammer.SimpleBanHammer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,19 +14,22 @@ public class onJoin implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
-        Player player = e.getPlayer();
-        if (!player.isOp()) return;
+        boolean notifier = SimpleBanHammer.getinstance().getConfig().getBoolean("update-notifier");
+        if (notifier) {
+            Player player = e.getPlayer();
+            if (!player.isOp()) return;
 
-        String currVer = "1.0.6";
+            String currVer = "1.0.7";
 
-        // Run update check asynchronously
-        Bukkit.getScheduler().runTaskAsynchronously(SimpleBanHammer.getinstance(), () -> {
-            String latestVer = SimpleBanHammer.getLastVer();
-            if (latestVer != null && !Objects.equals(currVer, latestVer)) {
-                Bukkit.getScheduler().runTask(SimpleBanHammer.getinstance(), () -> {
-                    player.sendMessage(ChatColor.YELLOW + "A new version of SimpleBanHammer is available! " + ChatColor.RED + currVer + ChatColor.WHITE + " -> " + ChatColor.GREEN + latestVer);
-                });
-            }
-        });
+            // Run update check asynchronously
+            Bukkit.getScheduler().runTaskAsynchronously(SimpleBanHammer.getinstance(), () -> {
+                String latestVer = SimpleBanHammer.getLastVer();
+                if (latestVer != null && !Objects.equals(currVer, latestVer)) {
+                    Bukkit.getScheduler().runTask(SimpleBanHammer.getinstance(), () -> {
+                        player.sendMessage(ChatColor.YELLOW + "A new version of SimpleBanHammer is available! " + ChatColor.RED + currVer + ChatColor.WHITE + " -> " + ChatColor.GREEN + latestVer);
+                    });
+                }
+            });
+        }
     }
 }

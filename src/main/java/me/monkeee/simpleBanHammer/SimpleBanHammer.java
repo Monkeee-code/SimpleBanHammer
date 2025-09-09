@@ -5,6 +5,7 @@ import me.monkeee.simpleBanHammer.commands.giveDaHammer;
 import me.monkeee.simpleBanHammer.commands.reloadConfig;
 import me.monkeee.simpleBanHammer.events.PlayerHitEvent;
 import me.monkeee.simpleBanHammer.events.onJoin;
+import me.monkeee.simpleBanHammer.events.onTabCompleteCommands;
 import net.luckperms.api.LuckPerms;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -42,6 +43,7 @@ public final class SimpleBanHammer extends JavaPlugin {
         getLogger().info("Loading Plugin");
         Objects.requireNonNull(this.getCommand("givehammer")).setExecutor(new giveDaHammer());
         Objects.requireNonNull(this.getCommand("sbh_reload")).setExecutor(new reloadConfig());
+        Objects.requireNonNull(getCommand("givehammer")).setTabCompleter(new onTabCompleteCommands());
         getServer().getPluginManager().registerEvents(new PlayerHitEvent(), this);
         getServer().getPluginManager().registerEvents(new onJoin(), this);
     }

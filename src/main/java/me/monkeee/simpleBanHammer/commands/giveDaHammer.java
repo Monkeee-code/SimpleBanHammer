@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -27,11 +28,16 @@ public class giveDaHammer implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         if (commandSender instanceof Player) {
+            FileConfiguration config = SimpleBanHammer.getinstance().getConfig();
+            String ban_command = config.getString("ban-command");
             ItemStack bh = new ItemStack(Material.IRON_AXE);
             ItemMeta bhm = bh.getItemMeta();
             List<String> lore = new ArrayList<>();
             lore.add(ChatColor.GRAY + "Reason:");
             lore.add(ChatColor.GRAY + commandArgs(strings));
+            lore.add(" ");
+            lore.add(ChatColor.GRAY + "Command:");
+            lore.add(ChatColor.GRAY + ban_command);
             assert bhm != null;
             bhm.setUnbreakable(true);
             bhm.setEnchantmentGlintOverride(true);

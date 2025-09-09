@@ -1,5 +1,5 @@
 ######################################
-#       SimpleBanHammer 1.0.6v       #
+#       SimpleBanHammer 1.0.7v       #
 #             By _Monkeee            #
 ######################################
 
@@ -20,3 +20,6 @@ ban-command: 'ban %player% %reason%'
 
 # Type: str, The ban message if non arguments given.
 default-reason: "The Ban Hammer Has Spoken!"
+
+# Type: Bool, If op players should receive Update Notifications when joining.
+update-notifier: true
