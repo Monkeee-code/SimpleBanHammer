@@ -1,5 +1,5 @@
 name: SimpleBanHammer
-version: '1.0.7'
+version: '1.0.8'
 main: me.monkeee.simpleBanHammer.SimpleBanHammer
 api-version: '1.20'
 prefix: SBH
@@ -15,8 +15,8 @@ permissions:
   sbh.usehammer:
     description: A perm. required to use the hammer.
     default: op
-  sbh.reload:
-    description: A perm. required to reload the config.
+  sbh.config:
+    description: A perm. required to manage the config via commands.
     default: op
   sbh.exampt:
     description: Gives invincibility to being banned.
@@ -25,6 +25,6 @@ commands:
   givehammer:
     description: Give yourself the ban hammer.
     permission: sbh.give
-  sbh_reload:
+  sbh_config:
     description: For reloading the Config
-    permission: sbh.reload
+    permission: sbh.config

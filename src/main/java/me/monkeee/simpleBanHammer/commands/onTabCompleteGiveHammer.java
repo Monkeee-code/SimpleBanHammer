@@ -1,4 +1,4 @@
-package me.monkeee.simpleBanHammer.events;
+package me.monkeee.simpleBanHammer.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class onTabCompleteCommands implements TabCompleter {
+public class onTabCompleteGiveHammer implements TabCompleter {
     @Nullable
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
