@@ -10,8 +10,8 @@ version = '1.0.9'
 repositories {
     mavenCentral()
     maven {
-        name = "spigotmc-repo"
-        url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+        name = "papermc"
+        url = uri("https://repo.papermc.io/repository/maven-public/")
     }
     maven {
         name = "CodeMC"
@@ -25,9 +25,10 @@ shadowJar {
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot-api:1.21.5-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.5-R0.1-SNAPSHOT")
     compileOnly('net.luckperms:api:5.4')
     compileOnly("org.projectlombok:lombok:1.18.38")
+    implementation("net.kyori:adventure-text-minimessage:4.24.0")
     implementation("de.tr7zw:item-nbt-api:2.15.1")
     implementation('org.json:json:20240303')
 }

@@ -1,6 +1,8 @@
 package me.monkeee.simpleBanHammer.commands;
 
 import me.monkeee.simpleBanHammer.SimpleBanHammer;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,7 +20,7 @@ public class configManage implements CommandExecutor {
         SimpleBanHammer plugin = SimpleBanHammer.getinstance();
         FileConfiguration config = SimpleBanHammer.getinstance().getConfig();
         if (args.length == 0) {
-            sender.sendMessage(ChatColor.RED + "You're missing arguments!");
+            sender.sendMessage(Component.text("<red>You're missing arguments!</red>"));
             return false;
         } else if (args[0].equalsIgnoreCase("list")) {
             sender.sendMessage(getConfigNames());
@@ -31,9 +33,10 @@ public class configManage implements CommandExecutor {
             if (args.length > 1) {
                 String configName = args[1];
                 if (config.isSet(configName)) {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Current value of \"&r" + configName + ChatColor.GOLD + "\":&r\n" + config.get(configName)));
-                } else sender.sendMessage(ChatColor.RED + "There is no config by the name of: " + configName);
-            } else sender.sendMessage(ChatColor.RED + "Please provide a valid config option!");
+                    // sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Current value of \"&r" + configName + ChatColor.GOLD + "\":&r\n" + config.get(configName)));
+                    sender.sendMessage(Component.text(String.valueOf("&6Current value of \"&r" + configName + "&6\":&r\n" + config.get(configName)).replace('&', '§')));
+                } else sender.sendMessage(Component.text("<red>There is no config by the name of: <reset>" + configName));
+            } else sender.sendMessage(Component.text("<red>Please provide a valid config option!"));
         } else if (args[0].equalsIgnoreCase("set")) {
             if (args.length > 2) {
                 String configName = args[1];
@@ -45,22 +48,24 @@ public class configManage implements CommandExecutor {
                     String newValue = String.join(" ", modArgs);
                     config.set(configName, newValue);
                     plugin.saveConfig();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aConfig &r" + configName + " &ahas been set to: \n&r" + ChatColor.translateAlternateColorCodes('&', newValue)));
-                } else sender.sendMessage(ChatColor.RED + "There is no config by the name of: " + configName);
-            } else sender.sendMessage(ChatColor.RED + "Please provide a valid config option!");
-        } else sender.sendMessage(ChatColor.RED + "Unknow option for config managing!");
+                    // sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aConfig &r" + configName + " &ahas been set to: \n&r" + ChatColor.translateAlternateColorCodes('&', newValue)));
+                    sender.sendMessage(Component.text(String.valueOf("&aConfig &r" + configName + " &ahas been set to: \n&r" + newValue).replace('&', '§')));
+                } else sender.sendMessage(Component.text("<red>There is no config by the name of: <white>" + configName));
+            } else sender.sendMessage(Component.text("<red>Please provide a valid config option!"));
+        } else sender.sendMessage(Component.text("<red>Unknow option for config managing!"));
         return false;
     }
 
     @NotNull
     private static String getConfigNames() {
-        List<String> configList = new ArrayList<>();
-        configList.add(ChatColor.YELLOW + "List of config names:");
-        configList.add(ChatColor.DARK_AQUA + "enable-broadcast" + ChatColor.WHITE + " - Defines if the public broadcast is on or off");
-        configList.add(ChatColor.DARK_AQUA + "broadcast-message" + ChatColor.WHITE + " - Defines the broadcast message");
+        List<TextComponent> configList = new ArrayList<>();
+        configList.add((Component.text("<yellow>List of config names:")));
+        configList.add(Component.text( "<dark_aqua>enable-broadcast  <white>- Defines if the public broadcast is on or off"));
+        configList.add(Component.text("<dark_aqua>broadcast-message <white>- Defines the broadcast message"));
         configList.add(ChatColor.DARK_AQUA + "ban-command" + ChatColor.WHITE + " - Defines the command that is used when using the hammer! \nVars: %player%, %reason%");
         configList.add(ChatColor.DARK_AQUA + "default-reason" + ChatColor.WHITE + " - Defines the default ban reason");
         configList.add(ChatColor.DARK_AQUA + "update-notifier" + ChatColor.WHITE + " - Defines if Operators get notified of new plugin versions!");
+        configList.add(ChatColor.DARK_AQUA + "webhook-link" + ChatColor.WHITE + " - Defines where to send the logs of the bans. (Leave empty to not sand anything)");
         return String.join("\n", configList);
     }
 
