@@ -1,5 +1,5 @@
 ######################################
-#       SimpleBanHammer 1.0.8v       #
+#       SimpleBanHammer 1.0.9v       #
 #             By _Monkeee            #
 ######################################
 
@@ -23,3 +23,9 @@ default-reason: "The Ban Hammer Has Spoken!"
 
 # Type: Bool, If op players should receive Update Notifications when joining.
 update-notifier: true
+
+# Type: Str, The item for the ban hammer. NOTE: HAS TO BE A VALID ITEM FORMAT (ex.: mace, iron_axe, diamond_axe,...)
+item-banhammer: "iron_axe"
+
+# Type: Str, Link of a discord webhook for the ban logs
+webhook-link: ""

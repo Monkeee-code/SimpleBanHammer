@@ -30,7 +30,8 @@ public class giveDaHammer implements CommandExecutor {
         if (commandSender instanceof Player) {
             FileConfiguration config = SimpleBanHammer.getinstance().getConfig();
             String ban_command = config.getString("ban-command");
-            ItemStack bh = new ItemStack(Material.IRON_AXE);
+            String item = config.getString("item-banhammer");
+            ItemStack bh = new ItemStack(Material.valueOf(item));
             ItemMeta bhm = bh.getItemMeta();
             List<String> lore = new ArrayList<>();
             lore.add(ChatColor.RED + "Reason" + ChatColor.WHITE + ":");

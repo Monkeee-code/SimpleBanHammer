@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'me.monkeee'
-version = '1.0.8'
+version = '1.0.9'
 
 repositories {
     mavenCentral()
@@ -27,6 +27,7 @@ shadowJar {
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.21.5-R0.1-SNAPSHOT")
     compileOnly('net.luckperms:api:5.4')
+    compileOnly("org.projectlombok:lombok:1.18.38")
     implementation("de.tr7zw:item-nbt-api:2.15.1")
     implementation('org.json:json:20240303')
 }
