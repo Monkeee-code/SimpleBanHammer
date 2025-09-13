@@ -39,6 +39,9 @@ public class PlayerHitEvent implements Listener {
                     Bukkit.dispatchCommand(dmg, banCommand);
                     if (!victim.isOnline()) {
                         dmg.sendMessage(ChatColor.GREEN + "Player " + ChatColor.RESET + victim.getName() + ChatColor.GREEN + " has been banned with Reason: " + ChatColor.WHITE + reason);
+                        String adminLog = dmg.getName() + " (" + dmg.getUniqueId() + ")";
+                        String playerLog = victim.getName() + " (" + victim.getUniqueId() + ")";
+                        SimpleBanHammer.getinstance().getLogger().info("Admin " + adminLog + " has used SimpleBanHammer on player " + playerLog);
                         if (config.getBoolean("enable-broadcast")) {
                             User admin = LuckPermsProvider.get().getPlayerAdapter(Player.class).getUser(dmg);
                             User player = LuckPermsProvider.get().getPlayerAdapter(Player.class).getUser(victim);

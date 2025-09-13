@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class giveDaHammer implements CommandExecutor {
     private String commandArgs(String[] args) {
@@ -30,7 +31,7 @@ public class giveDaHammer implements CommandExecutor {
         if (commandSender instanceof Player) {
             FileConfiguration config = SimpleBanHammer.getinstance().getConfig();
             String ban_command = config.getString("ban-command");
-            ItemStack bh = new ItemStack(Material.IRON_AXE);
+            ItemStack bh = new ItemStack(Material.valueOf(Objects.requireNonNull(config.getString("item-banhammer")).toUpperCase()));
             ItemMeta bhm = bh.getItemMeta();
             List<String> lore = new ArrayList<>();
             lore.add(ChatColor.RED + "Reason" + ChatColor.WHITE + ":");

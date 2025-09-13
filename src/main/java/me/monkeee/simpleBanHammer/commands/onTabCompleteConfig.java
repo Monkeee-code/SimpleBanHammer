@@ -1,5 +1,6 @@
 package me.monkeee.simpleBanHammer.commands;
 
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -16,7 +17,7 @@ public class onTabCompleteConfig implements TabCompleter {
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         String[] list = {"set", "get", "help", "list", "reload"};
-        String[] configNamesArr = {"enable-broadcast", "broadcast-message", "ban-command", "default-reason", "update-notifier"};
+        String[] configNamesArr = {"enable-broadcast", "broadcast-message", "ban-command", "default-reason", "update-notifier", "item-banhammer"};
         if (sender instanceof Player) {
             if (command.getName().equalsIgnoreCase("sbh_config")) {
                 if (args.length == 1) {
@@ -33,6 +34,13 @@ public class onTabCompleteConfig implements TabCompleter {
                         bool.add("true");
                         bool.add("false");
                         return bool;
+                    }
+                    if (args[1].equalsIgnoreCase("item-banhammer")) {
+                        List<String> returnList = new ArrayList<>();
+                        for (Material mat:Material.values()) {
+                            returnList.add(String.valueOf(mat));
+                        }
+                        return returnList;
                     }
                 }
             }
