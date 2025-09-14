@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class giveDaHammer implements CommandExecutor {
     private String commandArgs(String[] args) {
@@ -31,7 +32,8 @@ public class giveDaHammer implements CommandExecutor {
             FileConfiguration config = SimpleBanHammer.getinstance().getConfig();
             String ban_command = config.getString("ban-command");
             String item = config.getString("item-banhammer");
-            ItemStack bh = new ItemStack(Material.valueOf(item));
+            assert item != null;
+            ItemStack bh = new ItemStack(Objects.requireNonNull(Material.matchMaterial(item)));
             ItemMeta bhm = bh.getItemMeta();
             List<Component> lore = new ArrayList<>();
             lore.add(Component.text("<red>Reason<white>:"));
@@ -42,8 +44,8 @@ public class giveDaHammer implements CommandExecutor {
             assert bhm != null;
             bhm.setUnbreakable(true);
             bhm.setEnchantmentGlintOverride(true);
-            bhm.displayName(Component.text("<red>The Ban Hammer"));
-            bhm.itemName(Component.text("sbh_hammer"));
+            bhm.setDisplayName("§cThe Ban Hammer");
+            bhm.setItemName("sbh_hammer");
             bhm.lore(lore);
             bh.setItemMeta(bhm);
             NBT.modify(bh, nbt -> {

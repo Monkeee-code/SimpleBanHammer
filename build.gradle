@@ -22,16 +22,11 @@ repositories {
 shadowJar {
     relocate("de.tr7zw.changeme.nbtapi", "me.monkeee.simpleBanHammer.libs.NBT")
     relocate('org.json', 'me.monkeee.simpleBanHammer.libs.json')
-    relocate('net.kyori', 'me.monkeee.simpleBanHammer.libs.adventureText')
-    relocate('org.projectlombok', 'me.monkeee.simpleBanHammer.libs.lombok')
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.5-R0.1-SNAPSHOT")
     compileOnly('net.luckperms:api:5.4')
-    implementation("org.projectlombok:lombok:1.18.38")
-    implementation("net.kyori:adventure-text-minimessage:4.24.0")
-    implementation("net.kyori:adventure-text-serializer-legacy:4.24.0")
     implementation("de.tr7zw:item-nbt-api:2.15.1")
     implementation('org.json:json:20240303')
 }
