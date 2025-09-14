@@ -4,10 +4,10 @@ import de.tr7zw.changeme.nbtapi.NBT;
 import me.monkeee.simpleBanHammer.SimpleBanHammer;
 import me.monkeee.simpleBanHammer.discord.Discord;
 import me.monkeee.simpleBanHammer.discord.WebhookPayload;
+import net.kyori.adventure.text.Component;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -37,11 +37,11 @@ public class PlayerHitEvent implements Listener {
                 });
                 banCommand = banCommand.replace("%player%", victim.getName());
                 banCommand = banCommand.replace("%reason%", reason);
-                if (Objects.requireNonNull(weapon.getItemMeta()).getItemName().equals("sbh_hammer")) {
+                if (Objects.requireNonNull(weapon.getItemMeta()).itemName().equals(Component.text("sbh_hammer"))) {
                     victim.getWorld().strikeLightning(victim.getLocation());
                     Bukkit.dispatchCommand(dmg, banCommand);
                     if (!victim.isOnline()) {
-                        dmg.sendMessage(ChatColor.GREEN + "Player " + ChatColor.RESET + victim.getName() + ChatColor.GREEN + " has been banned with Reason: " + ChatColor.WHITE + reason);
+                        dmg.sendRichMessage("<green>Player <reset>" + victim.getName() + " <green>has been banned with Reason: <white>" + reason);
                         if (config.isSet("webhook-link")) {
                             if (Objects.requireNonNull(config.getString("webhook-link")).startsWith("https://discord.com")) {
                                 sendLog(dmg, victim, reason, banCommand);
@@ -60,13 +60,13 @@ public class PlayerHitEvent implements Listener {
                                 message = message.replace("%admin%", dmg.getName());
                                 message = message.replace("%prefix_admin%", PrefixAdmin + dmg.getName());
                                 message = message.replace("%reason%", reason);
-                                message = ChatColor.translateAlternateColorCodes('&', message);
-                                users.sendMessage(message);
+                                message = message.replace("&", "§");
+                                users.sendRichMessage(message);
                             }
                         }
-                    } else dmg.sendMessage(ChatColor.RED + "The ban failed. Please try again later.");
+                    } else dmg.sendRichMessage("<red>The ban failed. Please try again later.");
                 }
-            } else dmg.sendMessage(ChatColor.RED + "You don't have the right permissions or the player is Operator!");
+            } else dmg.sendRichMessage("<red>You don't have the right permissions or the player is Operator!");
         }
     }
 

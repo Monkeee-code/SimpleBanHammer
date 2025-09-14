@@ -53,9 +53,7 @@ public final class SimpleBanHammer extends JavaPlugin {
     public static SimpleBanHammer getinstance() {
         return instance;
     }
-    public static String getLastVer() {
-        return lastVer;
-    }
+    public static String getLastVer() { return lastVer; }
 
 
     private String getLatestVersion() {

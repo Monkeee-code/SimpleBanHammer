@@ -2,7 +2,6 @@ package me.monkeee.simpleBanHammer.events;
 
 import me.monkeee.simpleBanHammer.SimpleBanHammer;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,7 +24,7 @@ public class onJoin implements Listener {
             Bukkit.getScheduler().runTaskAsynchronously(SimpleBanHammer.getinstance(), () -> {
                 String latestVer = SimpleBanHammer.getLastVer();
                 if (latestVer != null && !Objects.equals(currVer, latestVer)) {
-                    Bukkit.getScheduler().runTask(SimpleBanHammer.getinstance(), () -> player.sendMessage(ChatColor.YELLOW + "A new version of SimpleBanHammer is available! " + ChatColor.RED + currVer + ChatColor.WHITE + " -> " + ChatColor.GREEN + latestVer));
+                    Bukkit.getScheduler().runTask(SimpleBanHammer.getinstance(), () -> player.sendRichMessage("<yellow>A new version of SimpleBanHammer is available! <red>" + currVer + "<white> -> <green>"  + latestVer));
                 }
             });
         }
