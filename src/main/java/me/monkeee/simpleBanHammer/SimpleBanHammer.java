@@ -33,7 +33,7 @@ public final class SimpleBanHammer extends JavaPlugin {
         lastVer = getLatestVersion();
         if (!NBT.preloadApi()) {
             getLogger().warning("NBT-API wasn't initialized properly, disabling the plugin");
-            getPluginLoader().disablePlugin(this);
+            getServer().getPluginManager().disablePlugin(this);
             return;
         }
         RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
@@ -53,9 +53,7 @@ public final class SimpleBanHammer extends JavaPlugin {
     public static SimpleBanHammer getinstance() {
         return instance;
     }
-    public static String getLastVer() {
-        return lastVer;
-    }
+    public static String getLastVer() { return lastVer; }
 
 
     private String getLatestVersion() {

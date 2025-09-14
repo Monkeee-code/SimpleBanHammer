@@ -25,4 +25,4 @@ default-reason: "The Ban Hammer Has Spoken!"
 update-notifier: true
 
 # Type: Str, The item for the ban hammer. NOTE: HAS TO BE A VALID ITEM FORMAT (ex.: mace, iron_axe, diamond_axe,...)
-item-banhammer: "iron_axe"
+item-banhammer: "IRON_AXE"
