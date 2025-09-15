@@ -8,9 +8,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class onTabCompleteConfig implements TabCompleter {
     @Nullable
@@ -21,11 +19,11 @@ public class onTabCompleteConfig implements TabCompleter {
         if (sender instanceof Player) {
             if (command.getName().equalsIgnoreCase("sbh_config")) {
                 if (args.length == 1) {
-                    return Arrays.asList(list);
+                    return getBetterList(Arrays.asList(list), args, 0);
                 }
                 if (args.length == 2) {
                     if (args[0].equalsIgnoreCase("set") || args[0].equalsIgnoreCase("get")) {
-                        return Arrays.asList(configNamesArr);
+                        return getBetterList(Arrays.asList(configNamesArr), args, 1);
                     }
                 }
                 if (args.length == 3) {
@@ -33,18 +31,33 @@ public class onTabCompleteConfig implements TabCompleter {
                         List<String> bool = new ArrayList<>();
                         bool.add("true");
                         bool.add("false");
-                        return bool;
+                        return getBetterList(bool, args, 2);
                     }
                     if (args[1].equalsIgnoreCase("item-banhammer")) {
                         List<String> returnList = new ArrayList<>();
                         for (Material mat:Material.values()) {
-                            returnList.add(String.valueOf(mat));
+                            returnList.add(String.valueOf(mat).toLowerCase());
                         }
-                        return returnList;
+                        return getBetterList(returnList, args, 2);
                     }
                 }
             }
         }
         return null;
+    }
+
+    public static List<String> getBetterList(List<String> autoCompleteList, String[] args, int argStage) {
+       List<String> complitions = null;
+       String input = args[argStage];
+       for (String s : autoCompleteList) {
+           if (s.startsWith(input)) {
+               if (complitions == null) {
+                   complitions = new ArrayList<>();
+               }
+               complitions.add(s);
+           }
+       }
+       if (complitions != null) Collections.sort(complitions);
+       return complitions;
     }
 }

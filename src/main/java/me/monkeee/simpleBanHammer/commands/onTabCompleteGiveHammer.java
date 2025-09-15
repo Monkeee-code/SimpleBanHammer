@@ -21,9 +21,10 @@ public class onTabCompleteGiveHammer implements TabCompleter {
                     list.add("Bug Exploiting...");
                     list.add("Cheating...");
                     list.add("<reason>");
-                    return list;
+                    return onTabCompleteConfig.getBetterList(list, args, 0);
 
             }
+            return null;
         }
         return null;
     }

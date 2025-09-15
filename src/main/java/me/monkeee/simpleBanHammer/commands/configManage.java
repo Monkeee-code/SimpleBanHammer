@@ -32,7 +32,7 @@ public class configManage implements CommandExecutor {
                 String configName = args[1];
                 if (config.isSet(configName)) {
                     // sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Current value of \"&r" + configName + ChatColor.GOLD + "\":&r\n" + config.get(configName)));
-                    sender.sendMessage(ChatColor.GOLD + "Current value of \"" + ChatColor.WHITE + configName + ChatColor.GOLD + "\":" + ChatColor.WHITE + ChatColor.translateAlternateColorCodes('&', String.valueOf(config.get(configName))));
+                    sender.sendMessage(ChatColor.GOLD + "Current value of \"" + ChatColor.WHITE + configName + ChatColor.GOLD + "\":\n" + ChatColor.WHITE + ChatColor.translateAlternateColorCodes('&', String.valueOf(config.get(configName))));
                 } else sender.sendMessage(ChatColor.RED + "There is no config by the name of: <reset>" + configName);
             } else sender.sendMessage(ChatColor.RED + "Please provide a valid config option!");
         } else if (args[0].equalsIgnoreCase("set")) {
@@ -62,7 +62,7 @@ public class configManage implements CommandExecutor {
         configList.add(ChatColor.DARK_AQUA + "ban-command " + ChatColor.WHITE +"- Defines the command that is used when using the hammer! \n<green>Vars: %player%, %reason%");
         configList.add(ChatColor.DARK_AQUA + "default-reason " + ChatColor.WHITE +"- Defines the default ban reason");
         configList.add(ChatColor.DARK_AQUA + "update-notifier " + ChatColor.WHITE +"- Defines if Operators get notified of new plugin versions!");
-        configList.add(ChatColor.DARK_AQUA + "webhook-link " + ChatColor.WHITE +"- Defines where to send the logs of the bans. (Leave empty to not sand anything)");
+        configList.add(ChatColor.DARK_AQUA + "item-banhammer " + ChatColor.WHITE +"- Defines what item to use for the ban hammer");
         return String.join("\n", configList);
     }
 
