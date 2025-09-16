@@ -50,7 +50,7 @@ public class onTabCompleteConfig implements TabCompleter {
        List<String> complitions = null;
        String input = args[argStage];
        for (String s : autoCompleteList) {
-           if (s.startsWith(input)) {
+           if (s.toLowerCase().startsWith(input) || s.toUpperCase().startsWith(input)) {
                if (complitions == null) {
                    complitions = new ArrayList<>();
                }

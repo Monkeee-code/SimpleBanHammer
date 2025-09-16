@@ -1,5 +1,5 @@
 ######################################
-#       SimpleBanHammer 1.0.9v       #
+#       SimpleBanHammer 1.1v       #
 #             By _Monkeee            #
 ######################################
 
@@ -26,3 +26,10 @@ update-notifier: true
 
 # Type: Str, The item for the ban hammer. NOTE: HAS TO BE A VALID ITEM FORMAT (ex.: mace, iron_axe, diamond_axe,...)
 item-banhammer: "IRON_AXE"
+
+# Type: List, The reasons, admins will be recommended to.
+reasons:
+  - Cheating
+  - Exploiting
+  - Abusing
+  - Harassment

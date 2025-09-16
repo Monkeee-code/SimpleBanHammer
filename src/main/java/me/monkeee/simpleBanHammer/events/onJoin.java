@@ -19,7 +19,7 @@ public class onJoin implements Listener {
             Player player = e.getPlayer();
             if (!player.isOp()) return;
 
-            String currVer = "1.0.9";
+            String currVer = "1.1";
 
             // Run update check asynchronously
             Bukkit.getScheduler().runTaskAsynchronously(SimpleBanHammer.getinstance(), () -> {
