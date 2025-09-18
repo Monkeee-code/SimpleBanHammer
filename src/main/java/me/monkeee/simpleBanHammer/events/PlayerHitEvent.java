@@ -43,17 +43,13 @@ public class PlayerHitEvent implements Listener {
                         String playerLog = victim.getName() + " (" + victim.getUniqueId() + ")";
                         SimpleBanHammer.getinstance().getLogger().info("Admin " + adminLog + " has used SimpleBanHammer on player " + playerLog);
                         if (config.getBoolean("enable-broadcast")) {
-                            User admin = LuckPermsProvider.get().getPlayerAdapter(Player.class).getUser(dmg);
-                            User player = LuckPermsProvider.get().getPlayerAdapter(Player.class).getUser(victim);
-                            String PrefixAdmin = admin.getCachedData().getMetaData().getPrefix();
-                            String PrefixPlayer = player.getCachedData().getMetaData().getPrefix();
                             for (Player users : Bukkit.getOnlinePlayers()) {
                                 String message = config.getString("broadcast-message");
                                 assert message != null;
-                                message = message.replace("%player%", victim.getName());
-                                message = message.replace("%prefix_player%", PrefixPlayer + victim.getName());
-                                message = message.replace("%admin%", dmg.getName());
-                                message = message.replace("%prefix_admin%", PrefixAdmin + dmg.getName());
+                                message = message.replace("%player%", getPlayerPrefix(victim));
+                                message = message.replace("%prefix_player%", getPlayerPrefix(victim));
+                                message = message.replace("%admin%", getPlayerPrefix(dmg));
+                                message = message.replace("%prefix_admin%", getPlayerPrefix(dmg));
                                 message = message.replace("%reason%", reason);
                                 message = ChatColor.translateAlternateColorCodes('&', message);
                                 users.sendMessage(message);
@@ -63,5 +59,17 @@ public class PlayerHitEvent implements Listener {
                 }
             } else dmg.sendMessage(ChatColor.RED + "You don't have the right permissions or the player is Operator!");
         }
+    }
+
+    private static String getPlayerPrefix(Player player) {
+        if (SimpleBanHammer.getLuckPerms()) {
+            User user = LuckPermsProvider.get().getPlayerAdapter(Player.class).getUser(player);
+            String prefix = user.getCachedData().getMetaData().getPrefix();
+
+            if (prefix != null) {
+                return prefix + player.getName();
+            }
+        }
+        return player.getName();
     }
 }

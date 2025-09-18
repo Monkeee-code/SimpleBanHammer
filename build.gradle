@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'me.monkeee'
-version = '1.1'
+version = '1.1.1'
 
 repositories {
     mavenCentral()
@@ -22,6 +22,9 @@ repositories {
 shadowJar {
     relocate("de.tr7zw.changeme.nbtapi", "me.monkeee.simpleBanHammer.libs.NBT")
     relocate('org.json', 'me.monkeee.simpleBanHammer.libs.json')
+
+    destinationDirectory = file("/home/marko/Desktop")
+    archiveFileName = "SimpleBanHammer-${version}.jar"
 }
 
 dependencies {

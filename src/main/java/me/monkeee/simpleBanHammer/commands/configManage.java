@@ -39,15 +39,12 @@ public class configManage implements CommandExecutor {
             if (args.length > 2) {
                 String configName = args[1];
                 if (config.isSet(configName)) {
-                    if (configName.equalsIgnoreCase("reasons")) {
-                        sender.sendMessage(ChatColor.RED + "This config can be only changed through the config file.");
-                        return false;
-                    }
                     List<String> LinkedList = new ArrayList<>(Arrays.asList(args));
                     LinkedList.removeFirst();
                     LinkedList.removeFirst();
                     String[] modArgs = LinkedList.toArray(new String[0]);
                     String newValue = String.join(" ", modArgs);
+                    if (newValue.equalsIgnoreCase("false") || newValue.equalsIgnoreCase("true")) config.set(configName, Boolean.getBoolean(newValue)); else config.set(configName, newValue);
                     config.set(configName, newValue);
                     plugin.saveConfig();
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aConfig &r" + configName + " &ahas been set to: \n&r" + ChatColor.translateAlternateColorCodes('&', newValue)));

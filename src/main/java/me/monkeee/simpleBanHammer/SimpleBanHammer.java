@@ -8,8 +8,8 @@ import me.monkeee.simpleBanHammer.events.PlayerHitEvent;
 import me.monkeee.simpleBanHammer.events.onJoin;
 import me.monkeee.simpleBanHammer.commands.onTabCompleteGiveHammer;
 import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -26,6 +26,7 @@ import java.util.Objects;
 public final class SimpleBanHammer extends JavaPlugin {
     private static SimpleBanHammer instance;
     private static String lastVer;
+    private static boolean LuckPermsEnabled = false;
 
     @Override
     public void onEnable() {
@@ -36,9 +37,13 @@ public final class SimpleBanHammer extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
-        if (provider != null) {
-            LuckPerms api = provider.getProvider();
+        if (Bukkit.getPluginManager().getPlugin("LuckPerms") != null) {
+            try {
+                LuckPerms luckPermsAPI = LuckPermsProvider.get();
+                LuckPermsEnabled = true;
+            } catch (IllegalStateException e) {
+                LuckPermsEnabled = false;
+            }
         }
         saveDefaultConfig();
         getLogger().info("Loading Plugin");
@@ -55,6 +60,9 @@ public final class SimpleBanHammer extends JavaPlugin {
     }
     public static String getLastVer() { return lastVer; }
 
+    public static boolean getLuckPerms() {
+        return LuckPermsEnabled;
+    }
 
     private String getLatestVersion() {
         try {
