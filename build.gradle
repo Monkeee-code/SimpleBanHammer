@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'me.monkeee'
-version = '1.1.1'
+version = '1.1.2'
 
 repositories {
     mavenCentral()
@@ -22,6 +22,7 @@ repositories {
 shadowJar {
     relocate("de.tr7zw.changeme.nbtapi", "me.monkeee.simpleBanHammer.libs.NBT")
     relocate('org.json', 'me.monkeee.simpleBanHammer.libs.json')
+    relocate('org.bstats', 'me.monkeee.simpleBanHammer.libs.bstats')
 
     destinationDirectory = file("/home/marko/Desktop")
     archiveFileName = "SimpleBanHammer-${version}.jar"
@@ -32,6 +33,7 @@ dependencies {
     compileOnly('net.luckperms:api:5.4')
     implementation("de.tr7zw:item-nbt-api:2.15.1")
     implementation('org.json:json:20240303')
+    implementation('org.bstats:bstats-bukkit:3.0.2')
 }
 
 build {

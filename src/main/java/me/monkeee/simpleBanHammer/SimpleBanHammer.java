@@ -9,6 +9,7 @@ import me.monkeee.simpleBanHammer.events.onJoin;
 import me.monkeee.simpleBanHammer.commands.onTabCompleteGiveHammer;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -31,7 +32,7 @@ public final class SimpleBanHammer extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        lastVer = getLatestVersion();
+        Bukkit.getScheduler().runTaskAsynchronously(this, () -> lastVer = getLatestVersion());
         if (!NBT.preloadApi()) {
             getLogger().warning("NBT-API wasn't initialized properly, disabling the plugin");
             getServer().getPluginManager().disablePlugin(this);
@@ -45,6 +46,8 @@ public final class SimpleBanHammer extends JavaPlugin {
                 LuckPermsEnabled = false;
             }
         }
+        int pluginId = 	27320;
+        Metrics metrics = new Metrics(this, pluginId);
         saveDefaultConfig();
         getLogger().info("Loading Plugin");
         Objects.requireNonNull(this.getCommand("givehammer")).setExecutor(new giveDaHammer());
