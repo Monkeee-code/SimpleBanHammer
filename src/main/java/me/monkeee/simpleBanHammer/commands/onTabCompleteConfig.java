@@ -15,7 +15,7 @@ public class onTabCompleteConfig implements TabCompleter {
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         String[] list = {"set", "get", "help", "list", "reload"};
-        String[] configNamesArr = {"enable-broadcast", "broadcast-message", "ban-command", "default-reason", "update-notifier", "item-banhammer"};
+        String[] configNamesArr = {"enable-broadcast", "broadcast-message", "ban-command", "default-reason", "update-notifier", "item-banhammer", "enable-console-sender"};
         if (sender instanceof Player) {
             if (command.getName().equalsIgnoreCase("sbh_config")) {
                 if (args.length == 1) {
@@ -47,17 +47,17 @@ public class onTabCompleteConfig implements TabCompleter {
     }
 
     public static List<String> getBetterList(List<String> autoCompleteList, String[] args, int argStage) {
-       List<String> complitions = null;
+       List<String> completions = null;
        String input = args[argStage];
        for (String s : autoCompleteList) {
            if (s.toLowerCase().startsWith(input) || s.toUpperCase().startsWith(input)) {
-               if (complitions == null) {
-                   complitions = new ArrayList<>();
+               if (completions == null) {
+                   completions = new ArrayList<>();
                }
-               complitions.add(s);
+               completions.add(s);
            }
        }
-       if (complitions != null) Collections.sort(complitions);
-       return complitions;
+       if (completions != null) Collections.sort(completions);
+       return completions;
     }
 }

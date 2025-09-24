@@ -1,7 +1,7 @@
 package me.monkeee.simpleBanHammer.commands;
 
 import me.monkeee.simpleBanHammer.SimpleBanHammer;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -64,6 +64,7 @@ public class configManage implements CommandExecutor {
         configList.add(ChatColor.DARK_AQUA + "default-reason " + ChatColor.WHITE +"- Defines the default ban reason");
         configList.add(ChatColor.DARK_AQUA + "update-notifier " + ChatColor.WHITE +"- Defines if Operators get notified of new plugin versions!");
         configList.add(ChatColor.DARK_AQUA + "item-banhammer " + ChatColor.WHITE +"- Defines what item to use for the ban hammer");
+        configList.add(ChatColor.DARK_AQUA + "enable-console-sender " + ChatColor.WHITE +"- Defines if the ban command should be executed by the admin or the console" + ChatColor.RED + " (BYPASSES PERMISSION)");
         return String.join("\n", configList);
     }
 

@@ -6,6 +6,7 @@ import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -25,39 +26,44 @@ public class PlayerHitEvent implements Listener {
         String banCommand = config.getString("ban-command");
         assert banCommand != null;
 
-        if (damager instanceof Player dmg && target instanceof Player victim) {
+        if (damager instanceof Player admin && target instanceof Player victim) {
 
-            if (dmg.hasPermission("sbh.usehammer") && !victim.isOp() && !victim.hasPermission("sbh.exampt")) {
-                ItemStack weapon = dmg.getInventory().getItemInMainHand();
+            if (admin.hasPermission("sbh.usehammer") && !victim.isOp() && !victim.hasPermission("sbh.exampt")) {
+                ItemStack weapon = admin.getInventory().getItemInMainHand();
+                if (weapon.getType().equals(Material.valueOf("AIR"))) return;
+                if (Objects.requireNonNull(weapon.getItemMeta()).getItemName().equals("sbh_hammer")) {
                 String reason = NBT.get(weapon, nbt -> {
                     return nbt.getString("Reason");
                 });
                 banCommand = banCommand.replace("%player%", victim.getName());
                 banCommand = banCommand.replace("%reason%", reason);
-                if (Objects.requireNonNull(weapon.getItemMeta()).getItemName().equals("sbh_hammer")) {
                     victim.getWorld().strikeLightning(victim.getLocation());
-                    Bukkit.dispatchCommand(dmg, banCommand);
+                    if (config.isSet("enable-console-sender") && Objects.requireNonNull(config.getString("enable-console-sender")).equalsIgnoreCase("true")) {
+                        banCommand = banCommand + " | by " + admin.getName();
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), banCommand);
+                    }
+                    else Bukkit.dispatchCommand(admin, banCommand);
                     if (!victim.isOnline()) {
-                        dmg.sendMessage(ChatColor.GREEN + "Player " + ChatColor.RESET + victim.getName() + ChatColor.GREEN + " has been banned with Reason: " + ChatColor.WHITE + reason);
-                        String adminLog = dmg.getName() + " (" + dmg.getUniqueId() + ")";
+                        admin.sendMessage(ChatColor.GREEN + "Player " + ChatColor.RESET + victim.getName() + ChatColor.GREEN + " has been banned with Reason: " + ChatColor.WHITE + reason);
+                        String adminLog = admin.getName() + " (" + admin.getUniqueId() + ")";
                         String playerLog = victim.getName() + " (" + victim.getUniqueId() + ")";
-                        SimpleBanHammer.getinstance().getLogger().info("Admin " + adminLog + " has used SimpleBanHammer on player " + playerLog);
+                        SimpleBanHammer.getinstance().getLogger().warning("Admin " + adminLog + " has used SimpleBanHammer on player " + playerLog);
                         if (config.getBoolean("enable-broadcast")) {
                             for (Player users : Bukkit.getOnlinePlayers()) {
                                 String message = config.getString("broadcast-message");
                                 assert message != null;
                                 message = message.replace("%player%", getPlayerPrefix(victim));
                                 message = message.replace("%prefix_player%", getPlayerPrefix(victim));
-                                message = message.replace("%admin%", getPlayerPrefix(dmg));
-                                message = message.replace("%prefix_admin%", getPlayerPrefix(dmg));
+                                message = message.replace("%admin%", getPlayerPrefix(admin));
+                                message = message.replace("%prefix_admin%", getPlayerPrefix(admin));
                                 message = message.replace("%reason%", reason);
                                 message = ChatColor.translateAlternateColorCodes('&', message);
                                 users.sendMessage(message);
                             }
                         }
-                    } else dmg.sendMessage(ChatColor.RED + "The ban failed. Please try again later.");
+                    } else admin.sendMessage(ChatColor.RED + "The ban failed. Please try again later.");
                 }
-            } else dmg.sendMessage(ChatColor.RED + "You don't have the right permissions or the player is Operator!");
+            } else admin.sendMessage(ChatColor.RED + "You don't have the right permissions or the player is Operator!");
         }
     }
 

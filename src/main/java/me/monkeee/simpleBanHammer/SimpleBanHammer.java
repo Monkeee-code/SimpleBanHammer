@@ -22,6 +22,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public final class SimpleBanHammer extends JavaPlugin {
@@ -48,7 +50,20 @@ public final class SimpleBanHammer extends JavaPlugin {
         }
         int pluginId = 	27320;
         Metrics metrics = new Metrics(this, pluginId);
+
         saveDefaultConfig();
+        ConfigUpdater.updateConfig(this, "config.yml");
+//        getConfig().options().copyDefaults(true);
+//        saveConfig();
+
+        List<String> header = new ArrayList<>();
+        header.add("######################################");
+        header.add("#       SimpleBanHammer " + getDescription().getVersion() +"v       #");
+        header.add("#             By _Monkeee            #");
+        header.add("######################################");
+        getConfig().options().setHeader(header);
+        saveConfig();
+
         getLogger().info("Loading Plugin");
         Objects.requireNonNull(this.getCommand("givehammer")).setExecutor(new giveDaHammer());
         Objects.requireNonNull(this.getCommand("sbh_config")).setExecutor(new configManage());
