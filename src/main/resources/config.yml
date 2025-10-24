@@ -30,5 +30,9 @@ reasons:
   - Abusing
   - Harassment
 
-# Type: Str, If the executed command is ran by the player or the console.
+# Type: Str, If the executed command is run by the player or the console.
 enable-console-sender: true
+
+# Type: Str, Discord webhook url for logging bans to discord.
+# LEAVE EMPTY IF NOT USED
+discord-webhook: ""

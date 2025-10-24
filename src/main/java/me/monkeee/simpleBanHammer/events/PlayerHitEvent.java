@@ -1,6 +1,7 @@
 package me.monkeee.simpleBanHammer.events;
 
 import de.tr7zw.changeme.nbtapi.NBT;
+import me.monkeee.simpleBanHammer.DiscordWebhook;
 import me.monkeee.simpleBanHammer.SimpleBanHammer;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
@@ -48,6 +49,11 @@ public class PlayerHitEvent implements Listener {
                         String adminLog = admin.getName() + " (" + admin.getUniqueId() + ")";
                         String playerLog = victim.getName() + " (" + victim.getUniqueId() + ")";
                         SimpleBanHammer.getinstance().getLogger().warning("Admin " + adminLog + " has used SimpleBanHammer on player " + playerLog);
+                        Bukkit.getScheduler().runTaskAsynchronously(SimpleBanHammer.getinstance(), () -> {
+                            if (config.isSet("discord-webhook") && config.isString("discord-webhook")) {
+                                Bukkit.getScheduler().runTask(SimpleBanHammer.getinstance(), () -> DiscordWebhook.sendWebhook(config.getString("discord-webhook"), victim, admin, reason));
+                            }
+                        });
                         if (config.getBoolean("enable-broadcast")) {
                             for (Player users : Bukkit.getOnlinePlayers()) {
                                 String message = config.getString("broadcast-message");

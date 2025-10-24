@@ -15,7 +15,7 @@ public class onTabCompleteConfig implements TabCompleter {
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         String[] list = {"set", "get", "help", "list", "reload"};
-        String[] configNamesArr = {"enable-broadcast", "broadcast-message", "ban-command", "default-reason", "update-notifier", "item-banhammer", "enable-console-sender"};
+        String[] configNamesArr = {"enable-broadcast", "broadcast-message", "ban-command", "default-reason", "update-notifier", "item-banhammer", "enable-console-sender", "discord-webhook"};
         if (sender instanceof Player) {
             if (command.getName().equalsIgnoreCase("sbh_config")) {
                 if (args.length == 1) {
