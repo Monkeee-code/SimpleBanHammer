@@ -53,8 +53,6 @@ public final class SimpleBanHammer extends JavaPlugin {
 
         saveDefaultConfig();
         ConfigUpdater.updateConfig(this, "config.yml");
-//        getConfig().options().copyDefaults(true);
-//        saveConfig();
 
         List<String> header = new ArrayList<>();
         header.add("######################################");
