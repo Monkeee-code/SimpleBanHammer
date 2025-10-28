@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'me.monkeee'
-version = '1.1.4'
+version = '1.1.5'
 
 repositories {
     mavenCentral()
@@ -24,7 +24,7 @@ shadowJar {
     relocate('org.json', 'me.monkeee.simpleBanHammer.libs.json')
     relocate('org.bstats', 'me.monkeee.simpleBanHammer.libs.bstats')
 
-    destinationDirectory = file("/home/marko/Desktop")
+    destinationDirectory = file("/home/marko/Desktop/MinecraftTestServer/plugins")
     archiveFileName = "SimpleBanHammer-${version}.jar"
 }
 

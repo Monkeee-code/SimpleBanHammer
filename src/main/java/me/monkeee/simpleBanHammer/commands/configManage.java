@@ -15,37 +15,53 @@ import java.util.List;
 public class configManage implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        // Gets the plugins instance
         SimpleBanHammer plugin = SimpleBanHammer.getinstance();
+        // Gets the plugin's config instance
         FileConfiguration config = SimpleBanHammer.getinstance().getConfig();
+
+        // Checks if the sender has input any arguments
         if (args.length == 0) {
             sender.sendMessage(ChatColor.RED + "You're missing arguments!");
             return false;
         } else if (args[0].equalsIgnoreCase("list")) {
+            // Executes the getConfigNames() function and sends it to the sender
             sender.sendMessage(getConfigNames());
         } else if (args[0].equalsIgnoreCase("help")) {
+            // Executes the getHelpStrings() function and sends it to the sender
             sender.sendMessage(getHelpStrings());
         } else if (args[0].equalsIgnoreCase("reload")) {
+            // Reloads the config
             plugin.reloadConfig();
             sender.sendMessage(ChatColor.GREEN + "The config has been reloaded!");
         } else if (args[0].equalsIgnoreCase("get")) {
             if (args.length > 1) {
+                // Gets the config's name
                 String configName = args[1];
+                // Checks if the config by that name is set
                 if (config.isSet(configName)) {
-                    // sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Current value of \"&r" + configName + ChatColor.GOLD + "\":&r\n" + config.get(configName)));
+                    // sends the sender the current value of the config by the config's name
                     sender.sendMessage(ChatColor.GOLD + "Current value of \"" + ChatColor.WHITE + configName + ChatColor.GOLD + "\":\n" + ChatColor.WHITE + ChatColor.translateAlternateColorCodes('&', String.valueOf(config.get(configName))));
                 } else sender.sendMessage(ChatColor.RED + "There is no config by the name of: " + ChatColor.WHITE + configName);
             } else sender.sendMessage(ChatColor.RED + "Please provide a valid config option!");
         } else if (args[0].equalsIgnoreCase("set")) {
             if (args.length > 2) {
+                // Gets the config's name
                 String configName = args[1];
+                // Cheks if the config is set
                 if (config.isSet(configName)) {
+                    // Assigns the command arguments as a list
                     List<String> LinkedList = new ArrayList<>(Arrays.asList(args));
+                    // Removes the first 2 arguments form the list as they are not intended to be of use
                     LinkedList.removeFirst();
                     LinkedList.removeFirst();
+                    // Assigns the modified list to an array
                     String[] modArgs = LinkedList.toArray(new String[0]);
+                    // Joins the array together
                     String newValue = String.join(" ", modArgs);
+                    // Sets the config's value based on the type (If its string or a boolean)
                     if (newValue.equalsIgnoreCase("false") || newValue.equalsIgnoreCase("true")) config.set(configName, Boolean.getBoolean(newValue)); else config.set(configName, newValue);
-                    config.set(configName, newValue);
+                    // Saves the new config values
                     plugin.saveConfig();
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aConfig &r" + configName + " &ahas been set to: \n&r" + ChatColor.translateAlternateColorCodes('&', newValue)));
                 } else sender.sendMessage(ChatColor.RED + "There is no config by the name of: " + ChatColor.WHITE + configName);
@@ -54,6 +70,7 @@ public class configManage implements CommandExecutor {
         return false;
     }
 
+    // All Config names (Hard-coded) in a single function, for easier retrival
     @NotNull
     private static String getConfigNames() {
         List<String> configList = new ArrayList<>();
@@ -68,16 +85,16 @@ public class configManage implements CommandExecutor {
         configList.add(ChatColor.DARK_AQUA + "discord-webhook " + ChatColor.WHITE +"- Defines in what discord channel will the log be sant to" + ChatColor.RED + " (LEAVE EMPTY IF UNUSED)");
         return String.join("\n", configList);
     }
-
+    // All the 'help' values (Hard-coded) in a single function, for the easier retrival
     @NotNull
     private static String getHelpStrings() {
-        List<String> s = new ArrayList<>();
-        s.add(ChatColor.YELLOW + "List of config options:");
-        s.add(ChatColor.RED + "help " + ChatColor.WHITE +"- Shows this message!");
-        s.add(ChatColor.RED + "list " + ChatColor.WHITE +"- Shows the list of all config names");
-        s.add(ChatColor.RED + "set " + ChatColor.WHITE +"- Sets a new value to the config");
-        s.add(ChatColor.RED + "get " + ChatColor.WHITE +"- Gets the config's current value");
-        s.add(ChatColor.RED + "reload " + ChatColor.WHITE +"- Reloads the config, applying any new changes!");
-        return String.join("\n", s);
+        List<String> HelpList = new ArrayList<>();
+        HelpList.add(ChatColor.YELLOW + "List of config options:");
+        HelpList.add(ChatColor.RED + "help " + ChatColor.WHITE +"- Shows this message!");
+        HelpList.add(ChatColor.RED + "list " + ChatColor.WHITE +"- Shows the list of all config names");
+        HelpList.add(ChatColor.RED + "set " + ChatColor.WHITE +"- Sets a new value to the config");
+        HelpList.add(ChatColor.RED + "get " + ChatColor.WHITE +"- Gets the config's current value");
+        HelpList.add(ChatColor.RED + "reload " + ChatColor.WHITE +"- Reloads the config, applying any new changes!");
+        return String.join("\n", HelpList);
     }
 }

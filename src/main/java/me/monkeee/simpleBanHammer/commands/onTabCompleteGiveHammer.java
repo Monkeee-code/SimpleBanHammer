@@ -16,9 +16,13 @@ public class onTabCompleteGiveHammer implements TabCompleter {
     @Nullable
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        // Get the config instance
         FileConfiguration config = SimpleBanHammer.getinstance().getConfig();
+        // Assign the reasons in confing to the variable
         List<String> list = config.getStringList("reasons");
+        // Checks weather the sender is player
         if (sender instanceof Player) {
+            // Checks if the command and the places of the cursor are correct
             if (command.getName().equalsIgnoreCase("givehammer") && args.length == 1) {
                     list.add("<reason>");
                     Collections.sort(list);
