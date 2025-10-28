@@ -12,13 +12,16 @@ import java.net.URL;
 public class DiscordWebhook {
     public static void sendWebhook(String webhookUrl, Player player, Player admin, String reason) {
         try {
+
+            String x = String.valueOf(player.getLocation().getBlockX());
+            String y = String.valueOf(player.getLocation().getBlockY());
+            String z = String.valueOf(player.getLocation().getBlockZ());
+
             // Create the embed object
-            JSONObject thumbnail = new JSONObject();
-            thumbnail.put("url", "https://mc-heads.net/avatar/" + player.getName() +".png");
             JSONObject embed = new JSONObject();
             embed.put("title", "[SBH] Player Banned");
             embed.put("description", "A player has been banned from the server with a Ban Hammer.");
-            embed.put("thumbnail", thumbnail);
+            embed.put("thumbnail", new JSONObject().put("url", "https://mc-heads.net/avatar/" + player.getName() +".png"));
             embed.put("color", 0xFF0000); // red color
 
             // Fields array
@@ -33,6 +36,11 @@ public class DiscordWebhook {
                     .put("name", "Admin")
                     .put("value", "**"+admin.getName()+"**\n`("+admin.getUniqueId()+")`")
                     .put("inline", true));
+
+            fields.put(new JSONObject()
+                    .put("name", "Location")
+                    .put("value", "**X: " + x + " Y: " + y + " Z: " + z +" / "+player.getWorld().getName()+"**")
+                    .put("inline", false));
 
             fields.put(new JSONObject()
                     .put("name", "Reason")

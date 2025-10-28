@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Objects;
 
 public final class SimpleBanHammer extends JavaPlugin {
+    // Getting the plugin instance
     private static SimpleBanHammer instance;
     private static String lastVer;
     private static boolean LuckPermsEnabled = false;
@@ -34,12 +35,15 @@ public final class SimpleBanHammer extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        // Running the Modrinth API Request Asynchronously for no lag or freezing
         Bukkit.getScheduler().runTaskAsynchronously(this, () -> lastVer = getLatestVersion());
+        // Checking if NBT-API loaded successfully
         if (!NBT.preloadApi()) {
             getLogger().warning("NBT-API wasn't initialized properly, disabling the plugin");
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
+        // Checking if luck perms loaded successfully
         if (Bukkit.getPluginManager().getPlugin("LuckPerms") != null) {
             try {
                 LuckPerms luckPermsAPI = LuckPermsProvider.get();
@@ -48,12 +52,13 @@ public final class SimpleBanHammer extends JavaPlugin {
                 LuckPermsEnabled = false;
             }
         }
+        // Assigning the plugin id for bStats
         int pluginId = 	27320;
         Metrics metrics = new Metrics(this, pluginId);
 
         saveDefaultConfig();
         ConfigUpdater.updateConfig(this, "config.yml");
-
+        // Adding a header to the top of the config
         List<String> header = new ArrayList<>();
         header.add("######################################");
         header.add("#       SimpleBanHammer " + getDescription().getVersion() +"v       #");
@@ -63,6 +68,7 @@ public final class SimpleBanHammer extends JavaPlugin {
         saveConfig();
 
         getLogger().info("Loading Plugin");
+        // Registering all the commands, listeners and tab auto completions
         Objects.requireNonNull(this.getCommand("givehammer")).setExecutor(new giveDaHammer());
         Objects.requireNonNull(this.getCommand("sbh_config")).setExecutor(new configManage());
         Objects.requireNonNull(getCommand("givehammer")).setTabCompleter(new onTabCompleteGiveHammer());
@@ -70,7 +76,7 @@ public final class SimpleBanHammer extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerHitEvent(), this);
         getServer().getPluginManager().registerEvents(new onJoin(), this);
     }
-
+    // Making sure other classes can obtain the plugin instance
     public static SimpleBanHammer getinstance() {
         return instance;
     }
@@ -79,7 +85,7 @@ public final class SimpleBanHammer extends JavaPlugin {
     public static boolean getLuckPerms() {
         return LuckPermsEnabled;
     }
-
+    // Runs an API request for getting the latest version of the plugin
     private String getLatestVersion() {
         try {
             URL url = new URI("https://api.modrinth.com/v2/project/simplebanhammer_me/version").toURL();
@@ -110,7 +116,7 @@ public final class SimpleBanHammer extends JavaPlugin {
         return new JSONArray(content.toString());
     }
 
-
+    // Runs if the plugin gets disabled
     @Override
     public void onDisable() {
         getLogger().warning("Thank you for using SimpleBanHammer! :D");

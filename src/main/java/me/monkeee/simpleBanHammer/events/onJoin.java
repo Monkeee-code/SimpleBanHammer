@@ -14,6 +14,7 @@ public class onJoin implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
+        // Checks if the notifier is enabled in config
         boolean notifier = SimpleBanHammer.getinstance().getConfig().getBoolean("update-notifier");
         if (notifier) {
             Player player = e.getPlayer();
