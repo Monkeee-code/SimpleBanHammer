@@ -28,3 +28,5 @@ commands:
   sbh_config:
     description: For reloading the Config
     permission: sbh.config
+  forceloadwebhook:
+    description: Force sends the webhook message

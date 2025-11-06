@@ -1,12 +1,9 @@
 package me.monkeee.simpleBanHammer;
 
 import de.tr7zw.changeme.nbtapi.NBT;
-import me.monkeee.simpleBanHammer.commands.giveDaHammer;
-import me.monkeee.simpleBanHammer.commands.configManage;
-import me.monkeee.simpleBanHammer.commands.onTabCompleteConfig;
+import me.monkeee.simpleBanHammer.commands.*;
 import me.monkeee.simpleBanHammer.events.PlayerHitEvent;
 import me.monkeee.simpleBanHammer.events.onJoin;
-import me.monkeee.simpleBanHammer.commands.onTabCompleteGiveHammer;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import org.bstats.bukkit.Metrics;
