@@ -12,6 +12,9 @@ import java.util.Objects;
 
 public class onJoin implements Listener {
 
+    private static final String currVer = SimpleBanHammer.getinstance().getDescription().getVersion();
+    private static final String latestVer = SimpleBanHammer.getLastVer();
+    
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
         boolean notifier = SimpleBanHammer.getinstance().getConfig().getBoolean("update-notifier");
@@ -19,11 +22,8 @@ public class onJoin implements Listener {
             Player player = e.getPlayer();
             if (!player.isOp()) return;
 
-            String currVer = SimpleBanHammer.getinstance().getDescription().getVersion();
-
             // Run update check asynchronously
             Bukkit.getScheduler().runTaskAsynchronously(SimpleBanHammer.getinstance(), () -> {
-                String latestVer = SimpleBanHammer.getLastVer();
                 if (latestVer != null && !Objects.equals(currVer, latestVer)) {
                     Bukkit.getScheduler().runTask(SimpleBanHammer.getinstance(), () -> player.sendMessage(ChatColor.YELLOW + "A new version of SimpleBanHammer is available! " + ChatColor.RED + currVer + ChatColor.WHITE + " -> " + ChatColor.GREEN + latestVer));
                 }
