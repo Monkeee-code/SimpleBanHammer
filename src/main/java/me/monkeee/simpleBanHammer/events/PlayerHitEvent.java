@@ -19,14 +19,16 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Objects;
 
 public class PlayerHitEvent implements Listener {
+
+    private static final FileConfiguration config = SimpleBanHammer.getinstance().getConfig();
+    
     @EventHandler
     public void onPlayerHit(EntityDamageByEntityEvent e) {
         // Gets the all the needed necessities
         Entity damager = e.getDamager();
         Entity target = e.getEntity();
-        FileConfiguration config = SimpleBanHammer.getinstance().getConfig();
         String banCommand = config.getString("ban-command");
-        assert banCommand != null;
+        assert banCommand != null : "BanCommand is null";
 
         // Checks if the entities are players
         if (damager instanceof Player admin && target instanceof Player victim) {

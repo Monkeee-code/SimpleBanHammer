@@ -1,9 +1,5 @@
 name: SimpleBanHammer
-<<<<<<< HEAD
-version: '1.1.5'
-=======
-version: ${version}
->>>>>>> 80074247dd104d23be9d3921c89b5747e2cb342b
+version: '1.1.4'
 main: me.monkeee.simpleBanHammer.SimpleBanHammer
 api-version: '1.20'
 prefix: SBH
