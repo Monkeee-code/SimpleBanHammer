@@ -1,5 +1,5 @@
 name: SimpleBanHammer
-version: '1.1.4'
+version: '1.1.5'
 main: me.monkeee.simpleBanHammer.SimpleBanHammer
 api-version: '1.20'
 prefix: SBH
@@ -28,3 +28,5 @@ commands:
   sbh_config:
     description: For reloading the Config
     permission: sbh.config
+  forceloadwebhook:
+    description: Force sends the webhook message
