@@ -18,7 +18,6 @@ public class onTabCompleteConfig implements TabCompleter {
         String[] list = {"set", "get", "help", "list", "reload"};
         String[] configNamesArr = {"enable-broadcast", "broadcast-message", "ban-command", "default-reason", "update-notifier", "item-banhammer", "enable-console-sender", "discord-webhook"};
         // Check if the sender is player
-        if (sender instanceof Player) {
             // Check if it's the correct command (name)
             if (command.getName().equalsIgnoreCase("sbh_config")) {
                 // Check where the sender is
@@ -49,7 +48,6 @@ public class onTabCompleteConfig implements TabCompleter {
                     }
                 }
             }
-        }
         return null;
     }
 
