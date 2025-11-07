@@ -14,12 +14,12 @@ public class onTabCompleteConfig implements TabCompleter {
     @Nullable
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        // Assign all of the values to variables
+        // Assign all the values to variables
         String[] list = {"set", "get", "help", "list", "reload"};
         String[] configNamesArr = {"enable-broadcast", "broadcast-message", "ban-command", "default-reason", "update-notifier", "item-banhammer", "enable-console-sender", "discord-webhook"};
         // Check if the sender is player
         if (sender instanceof Player) {
-            // Check if its the correct command (name)
+            // Check if it's the correct command (name)
             if (command.getName().equalsIgnoreCase("sbh_config")) {
                 // Check where the sender is
                 if (args.length == 1) {
@@ -41,7 +41,7 @@ public class onTabCompleteConfig implements TabCompleter {
                     }
                     if (args[1].equalsIgnoreCase("item-banhammer")) {
                         List<String> returnList = new ArrayList<>();
-                        // Loop through all of the Minecraft items and add them to the list
+                        // Loop through all the Minecraft items and add them to the list
                         for (Material mat:Material.values()) {
                             returnList.add(String.valueOf(mat).toLowerCase());
                         }
