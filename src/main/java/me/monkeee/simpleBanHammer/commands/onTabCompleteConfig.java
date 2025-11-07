@@ -31,7 +31,7 @@ public class onTabCompleteConfig implements TabCompleter {
                 }
                 if (args.length == 3) {
                     // Check what is the config's name
-                    if (args[1].equalsIgnoreCase("enable-broadcast") || args[1].equalsIgnoreCase("update-notifier")) {
+                    if (args[1].equalsIgnoreCase("enable-broadcast") || args[1].equalsIgnoreCase("update-notifier") || args[1].equalsIgnoreCase("enable-console-sender")) {
                         List<String> bool = new ArrayList<>();
                         // Add value, based on the config type
                         bool.add("true");
