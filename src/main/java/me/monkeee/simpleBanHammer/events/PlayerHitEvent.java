@@ -24,7 +24,7 @@ public class PlayerHitEvent implements Listener {
     public void onPlayerHit(EntityDamageByEntityEvent e) {
         // Gets the all the needed necessities
         Entity damager = e.getDamager();
-        final FileConfiguration config = SimpleBanHammer.getinstance().getConfig();
+        FileConfiguration config = SimpleBanHammer.getinstance().getConfig();
         Entity target = e.getEntity();
         String banCommand = config.getString("ban-command");
         assert banCommand != null : "BanCommand is null";
@@ -61,10 +61,11 @@ public class PlayerHitEvent implements Listener {
                         String playerLog = victim.getName() + " (" + victim.getUniqueId() + ")";
                         SimpleBanHammer.getinstance().getLogger().warning("Admin " + adminLog + " has used SimpleBanHammer on player " + playerLog);
                         Bukkit.getScheduler().runTaskAsynchronously(SimpleBanHammer.getinstance(), () -> {
-                            if (config.isSet("discord-webhook") && config.isString("discord-webhook")) {
+                            if (config.isSet("discord-webhook") && config.isString("discord-webhook") && config.getString("discord-webhook") != null && !Objects.requireNonNull(config.getString("discord-webhook")).isBlank()) {
                                 Bukkit.getScheduler().runTask(SimpleBanHammer.getinstance(), () -> DiscordWebhook.sendWebhook(config.getString("discord-webhook"), victim, admin, reason));
                             }
                         });
+                        sendAdminLog(victim, admin, reason);
                         // Checks weather 'enable-broadcast' is enabled
                         if (config.getBoolean("enable-broadcast")) {
                             // If enabled, sends every player a message of the ban
@@ -98,5 +99,15 @@ public class PlayerHitEvent implements Listener {
             }
         } // If not, returns just the player name
         return player.getName();
+    }
+
+    private static void sendAdminLog(Player player, Player admin, String reason) {
+        String message = "&l&cSBH&8 >&r&c "+admin.getDisplayName()+"&8banned the user&e"+player.getDisplayName()+" &8with reason:&7\n"+reason;
+        for (Player players : Bukkit.getOnlinePlayers()) {
+            if (players == player && players == admin) continue;
+            if (players.hasPermission("sbh.log") || players.isOp()) {
+                players.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+            }
+        }
     }
 }
