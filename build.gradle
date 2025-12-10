@@ -24,7 +24,7 @@ shadowJar {
     relocate('org.json', 'me.monkeee.simpleBanHammer.libs.json')
     relocate('org.bstats', 'me.monkeee.simpleBanHammer.libs.bstats')
 
-    destinationDirectory = file("/home/marko/Desktop/MinecraftTestServer/plugins")
+    destinationDirectory = file("D:\\Code\\SimpleBanHammer\\JAR-OUTPUT")
     archiveFileName = "SimpleBanHammer-${version}.jar"
 }
 
