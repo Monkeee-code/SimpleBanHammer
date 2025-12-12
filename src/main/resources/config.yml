@@ -23,13 +23,6 @@ update-notifier: true
 # Type: Str, The item for the ban hammer. NOTE: HAS TO BE A VALID ITEM FORMAT (ex.: mace, iron_axe, diamond_axe,...)
 item-banhammer: "IRON_AXE"
 
-# Type: List, The reasons, admins will be recommended to.
-reasons:
-  - Cheating
-  - Exploiting
-  - Abusing
-  - Harassment
-
 # Type: Str, If the executed command is run by the player or the console.
 enable-console-sender: true
 

@@ -16,17 +16,28 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class giveDaHammer implements CommandExecutor {
 
-    // Get the reason as a string insted of a Array
-    private String commandArgs(String[] args) {
-        if (args.length > 0) {
-            return String.join(" ", args);
-        } else {
-            return SimpleBanHammer.getinstance().getConfig().getString("default-reason");
-        }
+    private String[] argsHandler(String[] args) {
+        FileConfiguration config = SimpleBanHammer.getinstance().getConfig();
+        String input = String.join(" ", args);
+        String[] output = new String[2];
+        String defaultCommands = config.getString("ban-command");
+        String defaultReason = config.getString("ban-command");
+
+        Matcher reasonMatcher = Pattern.compile("reason:\"([^\"]+)\"").matcher(input);
+        Matcher commandMatcher = Pattern.compile("command:\"([^\"]+)\"").matcher(input);
+
+        if (reasonMatcher.find()) output[0] = reasonMatcher.group(1); else output[0] = defaultReason;
+        if (commandMatcher.find()) output[1] = commandMatcher.group(1); else output[1] = defaultCommands;
+
+        return output;
     }
+
+
     // Main Function
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
@@ -34,19 +45,20 @@ public class giveDaHammer implements CommandExecutor {
         if (commandSender instanceof Player) {
             // Get the config instance of the plugin
             FileConfiguration config = SimpleBanHammer.getinstance().getConfig();
-            // Get the ban command from the config
-            String ban_command = config.getString("ban-command");
+
             // Create an Item from the config (if empty, defaults to an iron axe)
             ItemStack bh = (config.getString("item-banhammer") != null || !Objects.equals(config.getString("item-banhammer"), "")) ? new ItemStack(Material.valueOf(Objects.requireNonNull(config.getString("item-banhammer")).toUpperCase())) : new ItemStack(Material.IRON_AXE);
+
             // Creates the metadata for the new item
             ItemMeta bhm = bh.getItemMeta();
+
             // Assigns a new list for the lore
             List<String> lore = new ArrayList<>();
             lore.add(ChatColor.RED + "Reason" + ChatColor.WHITE + ":");
-            lore.add(ChatColor.GREEN + commandArgs(strings));
+            lore.add(ChatColor.GREEN + argsHandler(strings)[0]);
             lore.add(" ");
             lore.add(ChatColor.RED + "Command" + ChatColor.WHITE + ":");
-            lore.add(ChatColor.GREEN + ban_command);
+            lore.add(ChatColor.GREEN + argsHandler(strings)[1]);
             assert bhm != null;
             // Sets the items metadata to the appropriate 'settings'
             bhm.setUnbreakable(true);
@@ -58,7 +70,8 @@ public class giveDaHammer implements CommandExecutor {
             bh.setItemMeta(bhm);
             // Assigns the item the ban reason
             NBT.modify(bh, nbt -> {
-                nbt.setString("Reason", commandArgs(strings));
+                nbt.setString("Reason", argsHandler(strings)[0]);
+                nbt.setString("Command", argsHandler(strings)[1]);
             });
             // Checks if the sender is eligible for the item to be given to him
             if (commandSender.hasPermission("sbh.give") || commandSender.isOp()) {

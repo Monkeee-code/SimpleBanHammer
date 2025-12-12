@@ -26,8 +26,6 @@ public class PlayerHitEvent implements Listener {
         Entity damager = e.getDamager();
         FileConfiguration config = SimpleBanHammer.getinstance().getConfig();
         Entity target = e.getEntity();
-        String banCommand = config.getString("ban-command");
-        assert banCommand != null : "BanCommand is null";
 
         // Checks if the entities are players
         if (damager instanceof Player admin && target instanceof Player victim) {
@@ -39,20 +37,19 @@ public class PlayerHitEvent implements Listener {
                 if (weapon.getType().equals(Material.valueOf("AIR"))) return;
                 // Checks if the weapon has 'sbh_hammer' custom name and obtains the custom/default reason
                 if (Objects.requireNonNull(weapon.getItemMeta()).getItemName().equals("sbh_hammer")) {
-                String reason = NBT.get(weapon, nbt -> {
-                    return nbt.getString("Reason");
-                });
+                String reason = NBT.get(weapon, nbt -> { return nbt.getString("Reason"); });
+                String command = NBT.get(weapon, nbt -> { return nbt.getString("command"); });
                 // Gets the ban command ready, ny replacing the necessary arguments
-                banCommand = banCommand.replace("%player%", victim.getName());
-                banCommand = banCommand.replace("%reason%", reason);
+                command = command.replace("%player%", victim.getName());
+                command = command.replace("%reason%", reason);
                 // Strikes the player with lightning
                 victim.getWorld().strikeLightning(victim.getLocation());
                     // Checks if the command is supposed to be run by the admin ot the console
                     if (config.isSet("enable-console-sender") && config.getBoolean("enable-console-sender")) {
-                        banCommand = banCommand + " | by " + admin.getName();
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), banCommand);
+                        command = command + " | by " + admin.getName();
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
                     }
-                    else Bukkit.dispatchCommand(admin, banCommand);
+                    else Bukkit.dispatchCommand(admin, command);
                     // Cheks if the player has left the server successfully
                     if (!victim.isOnline()) {
                         // If yes, it sends a few messages in logs, to admin and discord webhook, if set up
