@@ -101,7 +101,7 @@ public class PlayerHitEvent implements Listener {
     private static void sendAdminLog(Player player, Player admin, String reason) {
         String message = "&l&cSBH&8 >&r&c "+admin.getDisplayName()+"&8banned the user&e"+player.getDisplayName()+" &8with reason:&7\n"+reason;
         for (Player players : Bukkit.getOnlinePlayers()) {
-            if (players == player && players == admin) continue;
+            if (players == player || players == admin) continue;
             if (players.hasPermission("sbh.log") || players.isOp()) {
                 players.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
             }

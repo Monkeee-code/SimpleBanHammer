@@ -25,14 +25,20 @@ public class giveDaHammer implements CommandExecutor {
         FileConfiguration config = SimpleBanHammer.getinstance().getConfig();
         String input = String.join(" ", args);
         String[] output = new String[2];
-        String defaultCommands = config.getString("ban-command");
+        String defaultCommand = config.getString("ban-command");
         String defaultReason = config.getString("ban-command");
 
         Matcher reasonMatcher = Pattern.compile("reason:\"([^\"]+)\"").matcher(input);
         Matcher commandMatcher = Pattern.compile("command:\"([^\"]+)\"").matcher(input);
 
         if (reasonMatcher.find()) output[0] = reasonMatcher.group(1); else output[0] = defaultReason;
-        if (commandMatcher.find()) output[1] = commandMatcher.group(1); else output[1] = defaultCommands;
+        if (commandMatcher.find()) output[1] = commandMatcher.group(1); else output[1] = defaultCommand;
+
+        if (output[0] == null) output[0] = defaultReason;
+        if (output[1] == null) output[1] = defaultCommand;
+
+        if (output[0].isEmpty() || output[0].isBlank()) output[0] = defaultReason;
+        if (output[1].isEmpty() || output[1].isBlank()) output[1] = defaultCommand;
 
         return output;
     }

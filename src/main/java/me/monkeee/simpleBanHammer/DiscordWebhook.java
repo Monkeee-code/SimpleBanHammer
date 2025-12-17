@@ -72,9 +72,7 @@ public class DiscordWebhook {
             }
 
             int responseCode = connection.getResponseCode();
-            if (responseCode == 204) {
-                SimpleBanHammer.getinstance().getLogger().info("The ban has been logged to the discord");
-            } else {
+            if (responseCode != 204) {
                 SimpleBanHammer.getinstance().getLogger().warning("⚠️ Discord webhook returned code: " + responseCode);
             }
 

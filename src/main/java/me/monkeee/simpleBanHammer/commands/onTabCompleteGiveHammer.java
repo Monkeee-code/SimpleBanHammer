@@ -17,7 +17,7 @@ public class onTabCompleteGiveHammer implements TabCompleter {
     @Nullable
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        // Assign the reasons in confing to the variable
+        // Assign the reasons in config to the variable
         List<String> list = new ArrayList<>();
 
         list.add("command:");
