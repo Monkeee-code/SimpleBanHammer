@@ -26,7 +26,7 @@ public class giveDaHammer implements CommandExecutor {
         String input = String.join(" ", args);
         String[] output = new String[2];
         String defaultCommand = config.getString("ban-command");
-        String defaultReason = config.getString("ban-command");
+        String defaultReason = config.getString("default-reason");
 
         Matcher reasonMatcher = Pattern.compile("reason:\"([^\"]+)\"").matcher(input);
         Matcher commandMatcher = Pattern.compile("command:\"([^\"]+)\"").matcher(input);

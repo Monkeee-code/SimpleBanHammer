@@ -19,10 +19,6 @@ public class onTabCompleteGiveHammer implements TabCompleter {
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         // Assign the reasons in config to the variable
         List<String> list = new ArrayList<>();
-
-        list.add("command:");
-        list.add("reason:");
-
         String sArgs = String.join(" ", args);
 
         Matcher reasonMatcher = Pattern.compile("reason:\"([^\"]+)\"").matcher(sArgs);
@@ -31,14 +27,17 @@ public class onTabCompleteGiveHammer implements TabCompleter {
         if (sender instanceof Player) {
             // Checks if the command and the places of the cursor are correct
             if (command.getName().equalsIgnoreCase("givehammer")) {
+                list.add("command:");
+                list.add("reason:");
+
                 if (reasonMatcher.find()) list.remove("reason:");
                 if (commandMatcher.find()) list.remove("command:");
                 Collections.sort(list);
                 return onTabCompleteConfig.getBetterList(list, args, 0);
             }
-            if (args.length > 1)  return null;
-            return null;
+            if (args.length > 2)  return list;
+            return list;
         }
-        return null;
+        return list;
     }
 }

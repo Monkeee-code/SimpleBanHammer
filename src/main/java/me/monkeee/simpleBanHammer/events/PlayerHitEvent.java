@@ -38,7 +38,7 @@ public class PlayerHitEvent implements Listener {
                 // Checks if the weapon has 'sbh_hammer' custom name and obtains the custom/default reason
                 if (Objects.requireNonNull(weapon.getItemMeta()).getItemName().equals("sbh_hammer")) {
                 String reason = NBT.get(weapon, nbt -> { return nbt.getString("Reason"); });
-                String command = NBT.get(weapon, nbt -> { return nbt.getString("command"); });
+                String command = NBT.get(weapon, nbt -> { return nbt.getString("Command"); });
                 // Gets the ban command ready, ny replacing the necessary arguments
                 command = command.replace("%player%", victim.getName());
                 command = command.replace("%reason%", reason);
