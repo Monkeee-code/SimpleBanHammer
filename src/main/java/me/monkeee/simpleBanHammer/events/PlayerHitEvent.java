@@ -43,7 +43,9 @@ public class PlayerHitEvent implements Listener {
                 command = command.replace("%player%", victim.getName());
                 command = command.replace("%reason%", reason);
                 // Strikes the player with lightning
-                victim.getWorld().strikeLightning(victim.getLocation());
+                if (config.getBoolean("smite-target")) {
+                    smitePlayer(victim);
+                }
                     // Checks if the command is supposed to be run by the admin ot the console
                     if (config.isSet("enable-console-sender") && config.getBoolean("enable-console-sender")) {
                         command = command + " | by " + admin.getName();
@@ -53,7 +55,9 @@ public class PlayerHitEvent implements Listener {
                     // Cheks if the player has left the server successfully
                     if (!victim.isOnline()) {
                         // If yes, it sends a few messages in logs, to admin and discord webhook, if set up
-                        admin.sendMessage(ChatColor.GREEN + "Player " + ChatColor.RESET + victim.getName() + ChatColor.GREEN + " has been banned with Reason: " + ChatColor.WHITE + reason);
+                        if (config.getBoolean("confirm-message")) {
+                            sendConformation(admin, victim, reason);
+                        }
                         String adminLog = admin.getName() + " (" + admin.getUniqueId() + ")";
                         String playerLog = victim.getName() + " (" + victim.getUniqueId() + ")";
                         SimpleBanHammer.getinstance().getLogger().warning("Admin " + adminLog + " has used SimpleBanHammer on player " + playerLog);
@@ -106,5 +110,13 @@ public class PlayerHitEvent implements Listener {
                 players.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
             }
         }
+    }
+
+    private static void smitePlayer(Player player) {
+        player.getWorld().strikeLightning(player.getLocation());
+    }
+
+    private static void sendConformation(Player admin, Player victim, String reason) {
+        admin.sendMessage(ChatColor.GREEN + "Player " + ChatColor.RESET + victim.getName() + ChatColor.GREEN + " has been banned with Reason: " + ChatColor.WHITE + reason);
     }
 }

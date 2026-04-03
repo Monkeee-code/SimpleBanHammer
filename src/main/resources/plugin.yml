@@ -21,6 +21,9 @@ permissions:
   sbh.exampt:
     description: Gives invincibility to being banned.
     default: false
+  sbh.log:
+    description: A perm. for getting logs when Ban Hammer used by others
+    default: op
 commands:
   givehammer:
     description: Give yourself the ban hammer.

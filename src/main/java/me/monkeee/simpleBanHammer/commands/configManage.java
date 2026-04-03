@@ -82,10 +82,12 @@ public class configManage implements CommandExecutor {
         configList.add(ChatColor.DARK_AQUA + "update-notifier " + ChatColor.WHITE +"- Defines if Operators get notified of new plugin versions!");
         configList.add(ChatColor.DARK_AQUA + "item-banhammer " + ChatColor.WHITE +"- Defines what item to use for the ban hammer");
         configList.add(ChatColor.DARK_AQUA + "enable-console-sender " + ChatColor.WHITE +"- Defines if the ban command should be executed by the admin or the console" + ChatColor.RED + " (BYPASSES PERMISSION)");
-        configList.add(ChatColor.DARK_AQUA + "discord-webhook " + ChatColor.WHITE +"- Defines in what discord channel will the log be sant to" + ChatColor.RED + " (LEAVE EMPTY IF UNUSED)");
+        configList.add(ChatColor.DARK_AQUA + "discord-webhook " + ChatColor.WHITE +"- Defines in what discord channel will the log be sent to" + ChatColor.RED + " (LEAVE EMPTY IF UNUSED)");
+        configList.add(ChatColor.DARK_AQUA + "smite-player " + ChatColor.WHITE +"- Defines, if the target should be hit by lightning");
+        configList.add(ChatColor.DARK_AQUA + "confirm-message " + ChatColor.WHITE +"- Defines, if the player should get a conformation message of target leaving the server.");
         return String.join("\n", configList);
     }
-    // All the 'help' values (Hard-coded) in a single function, for the easier retrival
+    // All the 'help' values (Hard-coded) in a single function, for the easier retrieval
     @NotNull
     private static String getHelpStrings() {
         List<String> HelpList = new ArrayList<>();

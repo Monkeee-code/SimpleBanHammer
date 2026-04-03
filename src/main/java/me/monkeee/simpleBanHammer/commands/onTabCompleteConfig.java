@@ -16,7 +16,7 @@ public class onTabCompleteConfig implements TabCompleter {
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         // Assign all the values to variables
         String[] list = {"set", "get", "help", "list", "reload"};
-        String[] configNamesArr = {"enable-broadcast", "broadcast-message", "ban-command", "default-reason", "update-notifier", "item-banhammer", "enable-console-sender", "discord-webhook"};
+        String[] configNamesArr = {"enable-broadcast", "broadcast-message", "ban-command", "default-reason", "update-notifier", "item-banhammer", "enable-console-sender", "discord-webhook", "smite-player", "confirm-message"};
         // Check if the sender is player
             // Check if it's the correct command (name)
             if (command.getName().equalsIgnoreCase("sbh_config")) {
@@ -31,7 +31,7 @@ public class onTabCompleteConfig implements TabCompleter {
                 }
                 if (args.length == 3) {
                     // Check what is the config's name
-                    if (args[1].equalsIgnoreCase("enable-broadcast") || args[1].equalsIgnoreCase("update-notifier") || args[1].equalsIgnoreCase("enable-console-sender")) {
+                    if (args[1].equalsIgnoreCase("enable-broadcast") || args[1].equalsIgnoreCase("update-notifier") || args[1].equalsIgnoreCase("enable-console-sender") || args[1].equalsIgnoreCase("smite-player") || args[1].equalsIgnoreCase("confirm-message")) {
                         List<String> bool = new ArrayList<>();
                         // Add value, based on the config type
                         bool.add("true");

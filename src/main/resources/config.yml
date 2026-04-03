@@ -10,6 +10,12 @@ enable-broadcast: false
 # Vars:
 broadcast-message: '&cPlayer %prefix_player% &chas been banned by %prefix_admin% with the reason: &e%reason%'
 
+# Send a conformation message to the admin, if the player was kicked/banned from the server successfully
+confirm-message: true
+
+# If true, a lightning strike will hit at the location of the target
+smite-target: true
+
 # Type: str, The ban command used to ban players. (ex. tempban, ban, eban, mute, ...)
 # REQUIRED: The moderator has to have permission to use said command!
 ban-command: 'ban %player% %reason%'
